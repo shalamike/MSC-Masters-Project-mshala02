@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>pracicing motion</title>
+    <script src="canvasjs.min.js" type="text/javascript"></script>
+    <script src="jquery-3.3.1.js" type="text/javascript"></script>
+    <script>
+        // creating the most important variable of all, rate of change time:
+        var change_in_time = 0.005;
+
+        //creating initial particle positioning
+        var i_pos = 50;
+        var j_pos = 50;
+
+        //setting particle velocity to 0
+        var i_vel = 0;
+        var j_vel = 0;
+
+        //setting particle acceleration to 0
+        var i_acc = 0;
+        var j_acc = 0;
+
+        var run_sim = false;
+
+        var sim_on = document.getElementById("on").checked;
+        var sim_off = document.getElementById("off").checked;
+
+        function sim_on()
+        {
+            if (sim_on == true)
+            {
+                run_sim = true;
+            }
+            else if (sim_on == false)
+            {
+                run_sim = false;
+            }
+            else
+            {
+                run_sim = false;
+            }
+        }
+
+        function loop()
+        {
+            drawImage ("grey", i_pos, j_pos, 6, 6);
+
+            if (run_sim == true)
+            {
+                i_pos = i_vel * change_in_time;
+                i_vel = i_acc * change_in_time;
+                i_acc = 2;
+            }
+        }
+
+    </script>
+</head>
+<body>
+<canvas id="canvas" width="1000px" height="500px">
+    This text is displayed if your browser does not support HTML5 Canvas.
+</canvas>
+<fieldset>
+    <legend>start or stop simulation</legend>
+    <label>on</label>
+    <input type="radio" id = "on" name="simulation" autocomplete="off"/>
+    <label>off</label>
+    <input type="radio" id = "off" name="simulation" autocomplete="off"/>
+</fieldset>
+</body>
+</html>

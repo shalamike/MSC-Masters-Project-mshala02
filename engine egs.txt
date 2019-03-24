@@ -1,0 +1,43 @@
+https://github.com/kotlin-graphics/bullet
+
+https://github.com/DanielChappuis/reactphysics3d
+
+https://www.haroldserrano.com/blog/how-a-physics-engine-works-an-overview
+
+https://www.codeproject.com/Articles/1029858/Making-a-D-Physics-Engine-The-Math
+
+https://www.youtube.com/watch?v=3Oay1YxkP5c&list=PLEETnX-uPtBXm1KEr_2zQ6K_0hoGH6JJ0
+
+https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331
+
+how physics engines work
+http://buildnewgames.com/gamephysics/
+
+important mathematical aspects of a physics engine:
+
+(best textbook so far) Physics for game design
+https://learning.oreilly.com/library/view/physics-for-game/9781449361037/ch08.html
+
+understanding quaternions
+https://www.3dgep.com/understanding-quaternions/
+
+matrix algebra
+https://www.khanacademy.org/math/algebra-home/alg-matrices
+
+variable motion
+https://internal.ncl.ac.uk/ask/numeracy-maths-statistics/mechanics/kinematics/variable-acceleration.html
+
+defining suvat equations
+http://www.thechalkface.net/resources/deriving_suvat_equations.pdf
+
+wikepedia page for kinemetatic motion
+https://en.wikipedia.org/wiki/Equations_of_motion
+
+rigid body dynamics
+http://web.mit.edu/8.01t/www/materials/modules/chapter21.pdf
+
+finite element method
+https://en.wikipedia.org/wiki/Finite_element_method
+
+wikepedia page of physics engines
+https://en.wikipedia.org/wiki/Physics_engine
