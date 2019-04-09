@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Michael Shalaby</title>
+        <script src="jquery.js" type="text/javascript"></script> 
+		<script src="canvas.js" type="text/javascript"></script> 
+		
+        <script type="text/javascript">
+            var dt = 0.005;
+			//images
+     		//var background = new Image(); background.src = "background.png";
+			var plane = new Image(); plane.src = "plane.png";
+			var explosion = new Image(); explosion.src = "explosion.png";
+			var destroyed = new Image(); destroyed.src = "destroyed.png";
+			
+			//plane
+			var xp = -70;
+			var yp = 290;
+			var vxp = 107;
+			var vyp = 0;
+			//bomb
+			var xbomb = -70;
+			var ybomb = 290;
+			var vxbomb = 104;
+			var vybomb = 10;
+			var bombreleased = false;
+								
+			function mouseDown() {
+				bombreleased = true;
+			}		
+			
+            function loop() {      
+				// motion of plane
+				xp = xp + vxp * dt;	
+				yp = yp + vyp * dt;
+				
+				//motion of bomb
+				
+				if (bombreleased == false) {
+				// bomb is attached to plane
+					xbomb = xp + 25;
+					ybomb = yp + 25;
+					vxbomb = vxp;
+					vybomb = vyp;
+					}
+					
+				if (bombreleased == true) {
+					// bomb uses newtons laws of motion
+					xbomb = xbomb + vxbomb * dt;
+					ybomb = ybomb + vybomb * dt;
+					vyp = -15;
+					
+				if (ybomb < 346) {	
+				//water level
+					vxbomb = vxbomb - 6 * dt;
+					vybomb = vybomb + 9.81 * dt;	
+				}
+				
+				else if (vxbomb >= 20){
+				//means will bounce if velocity above 20
+				//to make bomb bounce
+				vybomb = -vybomb * 0.7;
+				ybomb = ybomb -2;
+				//-1 to force up one pixel so does not get stuck on water
+				}
+				
+				else
+				{
+				//otherwise bomb will sink below is rate of sink
+				vxbomb = 0;
+				vybomb = vybomb + 4 * dt; 
+				}
+				
+				if(xbomb > 996) {
+				//when speed bomb hits dam and drops to water
+				xbomb = 996;
+				vxbomb = vxbomb * 0.5 * -1;
+				vybomb = vybomb + 4 * dt;
+				}
+				
+				if (ybomb >= 550 && xbomb >= 900) {
+				//where bomb reaches floor
+				ybomb = 550;
+				vxbomb = 0;
+				vybomb = 0;
+				drawImage (destroyed, 0, 0, 1200, 600);
+				//0 because bomb needs to stop moving
+				}
+			}
+				//drawing the scene
+				drawImage (background, 0, 0, 1200, 600);
+				drawImage (plane, xp, yp, 42, 33);
+				fillCircle ("grey", xbomb, ybomb, 6, 6);
+				
+				if (ybomb >= 550) {
+				//make explosion
+				    drawImage (explosion, xbomb - 55, ybomb - 55, 105, 105);
+				}
+				
+            }
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" width="1200px" height="600px">
+        This text is displayed if your browser does not support HTML5 Canvas. 
+        </canvas>        
+    </body>
+</html>
