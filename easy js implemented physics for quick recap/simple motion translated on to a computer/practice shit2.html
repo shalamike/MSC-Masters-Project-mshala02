@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="jquery.js" type="text/javascript"></script> 
+		<script src="canvas.js" type="text/javascript"></script> 
+		
+		
+        <script type="text/javascript">
+		
+		
+			//images
+     		var background = new Image(); background.src = "background.png";
+
+			// first particle
+			//initial particle position
+			var i_pos = 200;
+			var j_pos = 200;
+			
+			//initial particle velocity 
+			var i_vel = 200;
+			var j_vel = 200;
+			
+			//initial particle acceleration
+			var i_acc = 10;
+			var j_acc = 10;
+			
+			
+					
+			//initial particle position
+			var x_pos = 250;
+			var y_pos = 250;
+			
+			//initial particle velocity 
+			var x_vel = 200;
+			var y_vel = 0;
+			
+			//initial particle acceleration
+			var x_acc = 20;
+			var y_acc = 0;
+			
+			
+			var dt = 0.005;
+			
+			
+			
+			
+            function loop() 
+			{      
+				//drawing the scene
+				drawImage (background, 0, 0, 1200, 600);
+				drawCircle("grey", i_pos, j_pos, 6, 6);
+				
+				//change in particle position
+				i_pos += i_vel * dt;
+				j_pos += j_vel * dt;
+				
+				//change in particle velocity 
+				i_vel += i_acc * dt;
+				j_vel += j_acc * dt;
+				
+				//collisions
+				if (i_pos <= 106 || i_pos >= 894)
+				{
+					i_vel *= -1 + i_acc * dt * -1;
+					i_pos += i_vel * dt;
+				}
+				if (j_pos <= 106 || j_pos >= 394)
+				{
+					j_vel *= -1 + j_acc * dt * -1;
+					j_pos += j_vel * dt;
+				}
+				
+            }
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" width="1200px" height="600px">
+        This text is displayed if your browser does not support HTML5 Canvas. 
+        </canvas>        
+    </body>
+</html><!DOCTYPE HTML>
+<html>
+    <head>
+        <script src="jquery.js" type="text/javascript"></script> 
+		<script src="canvas.js" type="text/javascript"></script> 
+		
+		
+        <script type="text/javascript">
+		
+		
+			//images
+     		var background = new Image(); background.src = "background.png";
+
+			// first particle
+			//initial particle position
+			var i_pos = 200;
+			var j_pos = 200;
+			
+			//initial particle velocity 
+			var i_vel = 200;
+			var j_vel = 200;
+			
+			//initial particle acceleration
+			var i_acc = 10;
+			var j_acc = 10;
+			
+			
+					
+			//initial particle position
+			var x_pos = 250;
+			var y_pos = 250;
+			
+			//initial particle velocity 
+			var x_vel = 200;
+			var y_vel = 0;
+			
+			//initial particle acceleration
+			var x_acc = 20;
+			var y_acc = 0;
+			
+			
+			var dt = 0.005;
+			
+			
+			
+			
+            function loop() 
+			{      
+				//drawing the scene
+				drawImage (background, 0, 0, 1200, 600);
+				drawCircle("grey", i_pos, j_pos, 6, 6);
+				
+				//change in particle position
+				i_pos += i_vel * dt;
+				j_pos += j_vel * dt;
+				
+				//change in particle velocity 
+				i_vel += i_acc * dt;
+				j_vel += j_acc * dt;
+				
+				//collisions
+				if (i_pos <= 106 || i_pos >= 894)
+				{
+					i_vel *= -1 + i_acc * dt * -1;
+					i_pos += i_vel * dt;
+				}
+				if (j_pos <= 106 || j_pos >= 394)
+				{
+					j_vel *= -1 + j_acc * dt * -1;
+					j_pos += j_vel * dt;
+				}
+				
+            }
+        </script>
+    </head>
+    <body>
+        <canvas id="canvas" width="1200px" height="600px">
+        This text is displayed if your browser does not support HTML5 Canvas. 
+        </canvas>        
+    </body>
+</html>

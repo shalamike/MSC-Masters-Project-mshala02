@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Michael Shalaby</title>
         <script src="jquery.js" type="text/javascript"></script> 
 		<script src="canvas.js" type="text/javascript"></script> 
 		
@@ -16,11 +15,11 @@
 			
 			//initial particle velocity 
 			var i_vel = 200;
-			var j_vel = 0;
+			var j_vel = 200;
 			
 			//initial particle acceleration
-			var i_acc = 20;
-			var j_acc = 0;
+			var i_acc = 10;
+			var j_acc = 10;
 			
 			
 					
@@ -33,10 +32,10 @@
 			var y_vel = 0;
 			
 			//initial particle acceleration
-			var x_acc = 20;
+			var x_acc = 0;
 			var y_acc = 0;
 			
-			
+			gravity = 98.1
 			var dt = 0.005;
 			
 			
@@ -54,7 +53,7 @@
 				
 				//change in particle velocity 
 				i_vel += i_acc * dt;
-				j_vel += j_acc * dt;
+				j_vel += (j_acc * dt + gravity)* 0.5 ;
 				
 				//collisions
 				if (i_pos <= 106 || i_pos >= 894)
@@ -64,7 +63,7 @@
 				}
 				if (j_pos <= 106 || j_pos >= 394)
 				{
-					j_vel *= -1 + j_acc * dt * -1;
+					j_vel *= (-1 + j_acc * dt * -1) * 0.5 * gravity;
 					j_pos += j_vel * dt;
 				}
 				
