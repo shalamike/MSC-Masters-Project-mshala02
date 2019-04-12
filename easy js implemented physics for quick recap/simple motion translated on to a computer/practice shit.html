@@ -35,8 +35,10 @@
 			var x_acc = 0;
 			var y_acc = 0;
 			
-			gravity = 98.1
+			var gravity = 98.1;
 			var dt = 0.005;
+			var force = 21;
+			var mass = 5;
 			
 			
 			
@@ -53,7 +55,7 @@
 				
 				//change in particle velocity 
 				i_vel += i_acc * dt;
-				j_vel += (j_acc * dt + gravity)* 0.5 ;
+				j_vel += (j_acc * dt + gravity)* 0.5;
 				
 				//collisions
 				if (i_pos <= 106 || i_pos >= 894)
@@ -64,7 +66,7 @@
 				if (j_pos <= 106 || j_pos >= 394)
 				{
 					j_vel *= (-1 + j_acc * dt * -1) * 0.5 * gravity;
-					j_pos += j_vel * dt;
+					j_pos += j_vel * dt;  
 				}
 				
             }
