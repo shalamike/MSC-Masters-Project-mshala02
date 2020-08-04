@@ -32,7 +32,7 @@ public class SimScreen implements Screen {
         this.sim = sim;
         //texture = new Texture("badlogic.jpg");
         simCam = new OrthographicCamera();
-        simPort = new FitViewport(50, 40, simCam);
+        simPort = new FitViewport(PhysicsImp.S_WIDTH, PhysicsImp.S_HEIGHT, simCam);
         simPort.apply();
 
 
