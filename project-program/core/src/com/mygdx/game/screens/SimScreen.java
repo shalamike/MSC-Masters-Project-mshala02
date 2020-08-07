@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.PhysicsImp;
+import com.mygdx.game.scenes.Hud;
 
 public class SimScreen implements Screen {
     private MyGdxGame sim;
@@ -22,6 +23,9 @@ public class SimScreen implements Screen {
     // camera variables
     private OrthographicCamera simCam;
     private Viewport simPort;
+
+    //hud
+    private Hud hud;
 
     // tiled variables
     private TmxMapLoader mapLoader;
@@ -35,6 +39,7 @@ public class SimScreen implements Screen {
         simPort = new FitViewport(PhysicsImp.S_WIDTH, PhysicsImp.S_HEIGHT, simCam);
         simPort.apply();
 
+        hud = new Hud(sim.batch);
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("projectmap.tmx");
@@ -65,6 +70,9 @@ public class SimScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
         sim.batch.setProjectionMatrix(simCam.combined);
+        hud.stage.draw();
+
+
 
     }
 

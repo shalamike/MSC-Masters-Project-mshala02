@@ -1,11 +1,11 @@
 package com.mygdx.game.scenes;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.Viewport;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -14,52 +14,81 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.PhysicsImp;
 
+
 public class Hud {
     public Stage stage;
-    private Viewport viewport;
+    // making a new camera and new viewport specifically for the hud
+    // this is to ensure that the hud stays in place while the game moves
+    public Viewport viewport;
 
-    private Integer distanceToDam;
-    private float planeSpeed;
-    private float bombRPM;
-    private float altitude;
+
+
+    private Integer worldTimer;
+    private float timeCount;
+    private Integer score;
+    private static float scale = 1;
 
     Label distanceLabel;
-    Label distanceIntLabel;
-    Label planeSpeedLabel;
-    Label planeIntLabel;
-    Label altitudeLabel;
-    Label altitudeIntLabel;
-    Label bombRPMlabel;
-    Label bombRPMIntLabel;
-
+    Label speedLabel;
+    Label bombRPM;
+    Label levelLabel;
+    Label worldLabel;
+    Label marioLabel;
 
     public Hud(SpriteBatch sb){
-        distanceToDam = 1900;
-        planeSpeed = 240;
-        bombRPM = 300;
-        altitude = 20;
+        worldTimer = 300;
+        timeCount = 0;
+        score = 0;
         viewport = new FitViewport(PhysicsImp.S_WIDTH, PhysicsImp.S_HEIGHT, new OrthographicCamera());
-        stage = new Stage (viewport,  sb);
+        // a stage is kind of like an empty box
+        stage = new Stage(viewport, sb);
 
+        // therefore what we need is a table to organise everything inside our empty box
         Table table = new Table();
-
+        //by efault the table will be in the centre of our stage
         table.top();
+        // now the table is on top of the stage
         table.setFillParent(true);
+        // now the table is the size of the stage
 
-        planeSpeedLabel = new Label("Plane Speed", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        planeIntLabel = new Label(String.format("%03d" , planeSpeed), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        distanceLabel = new Label("Distance To Dam", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        distanceIntLabel = new Label(String.format("%05d" , distanceToDam), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        bombRPMlabel = new Label("Bomb RPM", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        bombRPMIntLabel = new Label(String.format("%05d" , bombRPM), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        altitudeLabel = new Label("Altitude", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        altitudeIntLabel = new Label(String.format("%05d" , altitude), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        //time to create the labels
+        distanceLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        speedLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        bombRPM = new Label("Time ", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        marioLabel = new Label("MARIO", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
 
-        
+        distanceLabel.setFontScale(scale);
+        speedLabel.setFontScale(scale);
+        bombRPM.setFontScale(scale);
+        levelLabel.setFontScale(scale);
+        worldLabel.setFontScale(scale);
+        marioLabel.setFontScale(scale);
 
+//        Group group = new Group();
+//        group.addActor(countDownLabel);
+//        group.addActor(scoreLabel);
+//        group.addActor(timeLabel);
+//        group.addActor(levelLabel);
+//        group.addActor(worldLabel);
+//        group.addActor(marioLabel);
+//        group.setScale(1/16f, 1/16f);
+
+
+
+        // now time to add the labels to our table
+        // expandX expands the label the entire width of our screen. if multiple items use expandX, then the screen will share those equally by default
+        // pad Top will set the spacing between the top of the screen and our label by 10px in this case
+        table.add(marioLabel).expandX().padTop(10);
+        table.add(worldLabel).expandX().padTop(10);
+        table.add(bombRPM).expandX().padTop(10);
+        table.row();
+        table.add(speedLabel).expandX();
+        table.add(levelLabel).expandX();
+        table.add(distanceLabel).expandX();
+
+        stage.addActor(table);
 
     }
-
-
-
 }
