@@ -29,6 +29,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.PhysicsImp;
 import com.mygdx.game.scenes.Hud;
+import com.mygdx.game.sprites.Bomb;
 
 public class SimScreen implements Screen {
     private MyGdxGame sim;
@@ -49,8 +50,8 @@ public class SimScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
-
-
+    //Dynamic bodies/ the bomb and plane
+    private Bomb bomb;
 
 
     public SimScreen(MyGdxGame sim){
@@ -66,15 +67,21 @@ public class SimScreen implements Screen {
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("projectmap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
-        simCam.position.set(PhysicsImp.W_WIDTH, PhysicsImp.W_HEIGHT, 0 );
+        simCam.position.set(simPort.getWorldWidth(), simPort.getWorldHeight(), 0 );
         // initiallising box2d variables
-        world = new World(new Vector2(0,0), true);
+        world = new World(new Vector2(0,-10), true);
 
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
         b2dr = new Box2DDebugRenderer();
+
+        //initialising the bomb
+        bomb = new Bomb(world);
+
+        System.out.println(simPort.getWorldWidth());
+        System.out.println(simPort.getWorldHeight());
 
         // getting the water layer
         for(MapObject object :map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
@@ -115,6 +122,7 @@ public class SimScreen implements Screen {
 
     public void update(float dt){
         handleInput(dt);
+        world.step(1/60f, 6, 2);
         simCam.update();
         renderer.setView(simCam);
     }
