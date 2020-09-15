@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -32,19 +36,32 @@ public class SimScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+    //box 2d variables
+    private World world;
+    private Box2DDebugRenderer b2dr;
+
+
+
+
+
     public SimScreen(MyGdxGame sim){
         this.sim = sim;
         //texture = new Texture("badlogic.jpg");
         simCam = new OrthographicCamera();
         simPort = new FitViewport(PhysicsImp.S_WIDTH, PhysicsImp.S_HEIGHT, simCam);
         simPort.apply();
-
+        // creating the hud for the simulation
         hud = new Hud(sim.batch);
 
+        // initialising tiled variables
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("projectmap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1/16f);
-        simCam.position.set(simPort.getWorldWidth()/10, simPort.getWorldHeight()/2 , 0 );
+        renderer = new OrthogonalTiledMapRenderer(map);
+        simCam.position.set(PhysicsImp.W_WIDTH, PhysicsImp.W_HEIGHT, 0 );
+        // initiallising box2d variables
+        world = new World(new Vector2(0,-10), true);
+
+
 
     }
 
@@ -53,8 +70,9 @@ public class SimScreen implements Screen {
     }
 
     public void handleInput(float dt){
-        if (Gdx.input.isTouched())
-            simCam.position.x += 1000 * dt;
+        if (Gdx.input.isTouched()){
+            simCam.position.x += 100 * dt;
+        }
     }
 
     public void update(float dt){
@@ -69,7 +87,7 @@ public class SimScreen implements Screen {
         Gdx.gl.glClearColor(1,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
-        sim.batch.setProjectionMatrix(simCam.combined);
+        sim.batch.setProjectionMatrix(simCam.projection);
         hud.stage.draw();
 
 
@@ -78,7 +96,7 @@ public class SimScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        simCam.setToOrtho(false, width/10, height/10);
+        simCam.setToOrtho(false, width, height);
         simPort.update(width, height);
     }
 
