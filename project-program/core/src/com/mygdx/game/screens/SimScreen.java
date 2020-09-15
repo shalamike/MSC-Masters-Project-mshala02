@@ -30,6 +30,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.PhysicsImp;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Bomb;
+import com.mygdx.game.tools.B2WorldCreator;
 
 public class SimScreen implements Screen {
     private MyGdxGame sim;
@@ -80,32 +81,7 @@ public class SimScreen implements Screen {
         //initialising the bomb
         bomb = new Bomb(world);
 
-        System.out.println(simPort.getWorldWidth());
-        System.out.println(simPort.getWorldHeight());
-
-        // getting the water layer
-        for(MapObject object :map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
-            body = world.createBody(bdef);
-            // creating the fixtures
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
-
-        // getting the dam layer
-        for(MapObject object :map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
-            body = world.createBody(bdef);
-            // creating the fixtures
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
+        new B2WorldCreator(world, map);
 
 
     }

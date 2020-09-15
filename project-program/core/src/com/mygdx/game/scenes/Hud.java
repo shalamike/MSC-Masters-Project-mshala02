@@ -30,8 +30,8 @@ public class Hud {
 
     Label distanceLabel;
     Label speedLabel;
-    Label bombRPM;
-    Label levelLabel;
+    Label bombRPMlabel;
+    Label distance;
     Label worldLabel;
     Label marioLabel;
 
@@ -52,17 +52,17 @@ public class Hud {
         // now the table is the size of the stage
 
         //time to create the labels
-        distanceLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        speedLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        bombRPM = new Label("Time ", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        levelLabel = new Label("1-1", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        distanceLabel = new Label(String.format("Distance from Dam (Miles)"), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        speedLabel = new Label(String.format("Bomb's speed", score), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        bombRPMlabel = new Label("Bomb RPM", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        distance = new Label("", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
         worldLabel = new Label("WORLD", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
         marioLabel = new Label("MARIO", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
 
         distanceLabel.setFontScale(scale);
         speedLabel.setFontScale(scale);
-        bombRPM.setFontScale(scale);
-        levelLabel.setFontScale(scale);
+        bombRPMlabel.setFontScale(scale);
+        distance.setFontScale(scale);
         worldLabel.setFontScale(scale);
         marioLabel.setFontScale(scale);
 
@@ -82,10 +82,10 @@ public class Hud {
         // pad Top will set the spacing between the top of the screen and our label by 10px in this case
         table.add(marioLabel).expandX().padTop(10);
         table.add(worldLabel).expandX().padTop(10);
-        table.add(bombRPM).expandX().padTop(10);
+        table.add(bombRPMlabel).expandX().padTop(10);
         table.row();
         table.add(speedLabel).expandX();
-        table.add(levelLabel).expandX();
+        table.add(distance).expandX();
         table.add(distanceLabel).expandX();
 
         stage.addActor(table);

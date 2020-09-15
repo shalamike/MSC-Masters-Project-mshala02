@@ -18,12 +18,13 @@ public class Bomb {
     public void defineBomb(){
         BodyDef bdef = new BodyDef(); // creating a new body definition for the bomb
         bdef.position.set(800, 550); // temporarily setting bomb position
+
         bdef.type = BodyDef.BodyType.DynamicBody; // setting the bombs body to dynamic body
         b2dbody = world.createBody(bdef);//now we have the box2d body defined, we can create the body in our game world
         //defining the fixtures
         FixtureDef fdef = new FixtureDef(); // creating a new fixture def
         CircleShape shape = new CircleShape(); // creating a circle for our fixture def for now
-        shape.setRadius(150); // setting the circles radius to 5
+        shape.setRadius(15); // setting the circles radius to
         fdef.shape = shape; // setting our shapes radius to the fixure def
         b2dbody.createFixture(fdef); // setting the fixture def to our body.
     }
