@@ -6,11 +6,20 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -59,8 +68,37 @@ public class SimScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map);
         simCam.position.set(PhysicsImp.W_WIDTH, PhysicsImp.W_HEIGHT, 0 );
         // initiallising box2d variables
-        world = new World(new Vector2(0,-10), true);
+        world = new World(new Vector2(0,0), true);
 
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+        Body body;
+        b2dr = new Box2DDebugRenderer();
+
+        // getting the water layer
+        for(MapObject object :map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+            body = world.createBody(bdef);
+            // creating the fixtures
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
+
+        // getting the dam layer
+        for(MapObject object :map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+            body = world.createBody(bdef);
+            // creating the fixtures
+            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+            fdef.shape = shape;
+            body.createFixture(fdef);
+        }
 
 
     }
@@ -71,7 +109,7 @@ public class SimScreen implements Screen {
 
     public void handleInput(float dt){
         if (Gdx.input.isTouched()){
-            simCam.position.x += 100 * dt;
+            simCam.position.x += 1000 * dt;
         }
     }
 
@@ -90,6 +128,7 @@ public class SimScreen implements Screen {
         sim.batch.setProjectionMatrix(simCam.projection);
         hud.stage.draw();
 
+        b2dr.render(world, simCam.combined);
 
 
     }
