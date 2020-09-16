@@ -7,8 +7,22 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class Bomb {
+    public static final float radius = 12.5f; // will make it private with getters and setters once i create the menu screen
+    public static final float bombDensity = 3.6f; // will make it private variable with getters and setters once i create the menu screen
+    public static final float RPM = 500;
+
     public World world; // this will be the world that mario will live inside
     public Body b2dbody; // box2d body
+
+    private int rotationalVelocity;
+
+    public int getRotationalVelocity(){
+        return this.rotationalVelocity;
+    }
+
+    public void setRotationalVelocity(int num){
+        this.rotationalVelocity = num;
+    }
 
     public Bomb(World world){
         this.world = world;
@@ -24,7 +38,7 @@ public class Bomb {
         //defining the fixtures
         FixtureDef fdef = new FixtureDef(); // creating a new fixture def
         CircleShape shape = new CircleShape(); // creating a circle for our fixture def for now
-        shape.setRadius(15); // setting the circles radius to
+        shape.setRadius(radius); // setting the circles radius (subject to change)
         fdef.shape = shape; // setting our shapes radius to the fixure def
         b2dbody.createFixture(fdef); // setting the fixture def to our body.
     }
