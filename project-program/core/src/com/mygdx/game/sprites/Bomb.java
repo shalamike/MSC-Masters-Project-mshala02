@@ -15,6 +15,19 @@ public class Bomb {
     public Body b2dbody; // box2d body
 
     private int rotationalVelocity;
+    private int gravity;
+
+    public int getBombspeed() {
+        return bombspeed;
+    }
+
+    public void setBombspeed(int bombspeed) {
+        this.bombspeed = bombspeed;
+    }
+
+    private int bombspeed;
+
+
 
     public int getRotationalVelocity(){
         return this.rotationalVelocity;
@@ -23,6 +36,7 @@ public class Bomb {
     public void setRotationalVelocity(int num){
         this.rotationalVelocity = num;
     }
+
 
     public Bomb(World world){
         this.world = world;
@@ -41,5 +55,13 @@ public class Bomb {
         shape.setRadius(radius); // setting the circles radius (subject to change)
         fdef.shape = shape; // setting our shapes radius to the fixure def
         b2dbody.createFixture(fdef); // setting the fixture def to our body.
+    }
+
+    public int getGravity() {
+        return gravity;
+    }
+
+    public void setGravity(int gravity) {
+        this.gravity = gravity;
     }
 }
