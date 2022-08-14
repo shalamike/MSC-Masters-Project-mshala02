@@ -6,7 +6,7 @@ import com.sun.security.sasl.ClientFactoryImpl;
 public class PhysicsImp {
     private Bomb bomb;
     // setting up the screen variables
-    public static final int PPM = 100; // pixels per meter may change this later
+    public static final float PPM = 100; // pixels per meter may change this later
     public static final int S_WIDTH = 1350; // screen width
     public static final int S_HEIGHT = 759; // screeen height
     public static final int W_WIDTH = 10560 * 16; // world width

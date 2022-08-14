@@ -96,7 +96,8 @@ public class SimScreen implements Screen {
 
     public void handleInput(float dt){
         if (Gdx.input.isTouched()){
-            simCam.position.x += 1000 * dt;
+            //simCam.position.x += 1000 * dt;
+            bomb.b2dbody.applyLinearImpulse(new Vector2(500,0), bomb.b2dbody.getWorldCenter(), true);
         }
     }
 
