@@ -76,10 +76,10 @@ public class SimScreen implements Screen {
 
 
 
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
+//        BodyDef bdef = new BodyDef();
+//        PolygonShape shape = new PolygonShape();
+//        FixtureDef fdef = new FixtureDef();
+//        Body body;
         b2dr = new Box2DDebugRenderer();
 
         //initialising the bomb
@@ -104,6 +104,7 @@ public class SimScreen implements Screen {
     public void update(float dt){
         handleInput(dt);
         world.step(1/60f, 6, 2);
+        simCam.position.x = bomb.b2dbody.getPosition().x;
         simCam.update();
         renderer.setView(simCam);
     }
