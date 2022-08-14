@@ -70,7 +70,9 @@ public class SimScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map);
         simCam.position.set(simPort.getWorldWidth()/2, simPort.getWorldHeight()/2, 0 );
         // initiallising box2d variables
-        world = new World(new Vector2(0,0), true);
+        world = new World(new Vector2(0,-10), true);
+
+        bomb = new Bomb(world);
 
 
 

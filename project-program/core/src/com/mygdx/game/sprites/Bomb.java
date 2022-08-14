@@ -31,7 +31,7 @@ public class Bomb {
 
     public void defineBomb(){
         BodyDef bdef = new BodyDef(); // creating a new body definition for the bomb
-        bdef.position.set(800, 550); // temporarily setting bomb position
+        bdef.position.set(500, 550); // temporarily setting bomb position
 
         bdef.type = BodyDef.BodyType.DynamicBody; // setting the bombs body to dynamic body
         b2dbody = world.createBody(bdef);//now we have the box2d body defined, we can create the body in our game world
