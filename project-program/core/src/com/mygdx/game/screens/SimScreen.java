@@ -78,6 +78,38 @@ public class SimScreen implements Screen {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
+
+        //for the water layer, will be moved to another class of its own very soon
+        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() + rect.getWidth()/2 , rect.getY() + rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth() /2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+
+            body.createFixture(fdef);
+        }
+        //for the dam layer, also will be moved to its own class very soon.
+        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX() + rect.getWidth()/2 , rect.getY() + rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+
+            shape.setAsBox(rect.getWidth() /2, rect.getHeight()/2);
+
+            fdef.shape = shape;
+
+            body.createFixture(fdef);
+        }
+
         b2dr = new Box2DDebugRenderer();
 
         //initialising the bomb
