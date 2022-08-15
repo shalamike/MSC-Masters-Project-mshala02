@@ -68,11 +68,11 @@ public class SimScreen implements Screen {
 
         // initialising tiled variables
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("projectmap3.tmx");
+        map = mapLoader.load("projectmap.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / PhysicsImp.UNITSCALE);
         simCam.position.set(simPort.getWorldWidth()/2, simPort.getWorldHeight()/2, 0 );
         // initiallising box2d variables
-        world = new World(new Vector2(0,0), true);
+        world = new World(new Vector2(0,-10), true);
 
         bomb = new Bomb(world);
 
@@ -100,7 +100,7 @@ public class SimScreen implements Screen {
         if (Gdx.input.isTouched()){
             //simCam.position.x += 1000 * dt;
             bomb.setGravity(0);
-            bomb.b2dbody.applyLinearImpulse(new Vector2(500,bomb.getGravity()), bomb.b2dbody.getWorldCenter(), true);
+            bomb.b2dbody.applyLinearImpulse(new Vector2(200,bomb.getGravity()), bomb.b2dbody.getWorldCenter(), true);
         }
     }
 
