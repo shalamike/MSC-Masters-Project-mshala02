@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="15" height="5" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="14">
+ <tileset firstgid="1" source="tileset_gutter.tsx"/>
+ <layer id="2" name="Background" width="15" height="5" locked="1">
+  <data encoding="csv">
+763,763,763,763,763,763,763,763,763,763,763,763,763,763,763,
+763,763,763,763,763,763,763,763,763,763,763,763,763,763,763,
+763,763,763,763,763,763,763,763,763,763,763,763,763,763,763,
+763,763,763,763,763,763,763,763,763,763,763,763,763,763,763,
+763,763,763,763,763,763,763,763,763,763,763,763,763,763,763
+</data>
+ </layer>
+ <layer id="1" name="graphics" width="15" height="5" opacity="0.9">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,166,166,166,
+862,862,862,862,862,862,862,862,862,862,862,862,166,133,166,
+895,895,895,895,895,895,895,895,895,895,895,895,166,133,166
+</data>
+ </layer>
+ <objectgroup id="3" name="water">
+  <object id="3" x="0" y="48" width="192" height="32"/>
+ </objectgroup>
+ <objectgroup id="5" name="dam">
+  <object id="12" x="192" y="32" width="48" height="48"/>
+  <object id="13" x="198.737" y="-23.2421" height="1.01053"/>
+ </objectgroup>
+</map>

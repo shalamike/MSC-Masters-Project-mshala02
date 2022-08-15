@@ -61,15 +61,15 @@ public class SimScreen implements Screen {
         this.sim = sim;
         //texture = new Texture("badlogic.jpg");
         simCam = new OrthographicCamera();
-        simPort = new FitViewport(PhysicsImp.S_WIDTH, PhysicsImp.S_HEIGHT, simCam);
+        simPort = new FitViewport(PhysicsImp.S_WIDTH / PhysicsImp.UNITSCALE, PhysicsImp.S_HEIGHT / PhysicsImp.UNITSCALE, simCam);
         simPort.apply();
         // creating the hud for the simulation
         hud = new Hud(sim.batch);
 
         // initialising tiled variables
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("projectmap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
+        map = mapLoader.load("projectmap3.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / PhysicsImp.UNITSCALE);
         simCam.position.set(simPort.getWorldWidth()/2, simPort.getWorldHeight()/2, 0 );
         // initiallising box2d variables
         world = new World(new Vector2(0,0), true);
@@ -108,6 +108,7 @@ public class SimScreen implements Screen {
         handleInput(dt);
         world.step(1/60f, 6, 2);
         simCam.position.x = bomb.b2dbody.getPosition().x;
+        simCam.position.y = bomb.b2dbody.getPosition().y;
         simCam.update();
         renderer.setView(simCam);
     }
