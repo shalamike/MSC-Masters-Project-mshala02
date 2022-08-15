@@ -72,7 +72,7 @@ public class SimScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, 1 / PhysicsImp.UNITSCALE);
         simCam.position.set(simPort.getWorldWidth()/2, simPort.getWorldHeight()/2, 0 );
         // initiallising box2d variables
-        world = new World(new Vector2(0,-10), true);
+        world = new World(new Vector2(0,0), true);
 
         bomb = new Bomb(world);
 
@@ -99,7 +99,8 @@ public class SimScreen implements Screen {
     public void handleInput(float dt){
         if (Gdx.input.isTouched()){
             //simCam.position.x += 1000 * dt;
-            bomb.setGravity(0);
+            //bomb.setGravity(0);
+            world.setGravity(new Vector2(0,-10));
             bomb.b2dbody.applyLinearImpulse(new Vector2(200,bomb.getGravity()), bomb.b2dbody.getWorldCenter(), true);
         }
     }
