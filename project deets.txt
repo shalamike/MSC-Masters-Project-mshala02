@@ -1,0 +1,2 @@
+position of the dam on the x axis: 16868.494
+position of the dam on water on the y axis: 25.905

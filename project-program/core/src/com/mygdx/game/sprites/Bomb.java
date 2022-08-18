@@ -58,6 +58,8 @@ public class Bomb {
         b2dbody.createFixture(fdef); // setting the fixture def to our body.
     }
 
+
+
     public int getGravity() {
         return gravity;
     }

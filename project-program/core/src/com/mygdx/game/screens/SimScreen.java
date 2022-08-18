@@ -102,6 +102,7 @@ public class SimScreen implements Screen {
             //bomb.setGravity(0);
             world.setGravity(new Vector2(0,-10));
             bomb.b2dbody.applyLinearImpulse(new Vector2(200,bomb.getGravity()), bomb.b2dbody.getWorldCenter(), true);
+            //bomb.b2dbody.applyAngularImpulse(20,true);
         }
     }
 
@@ -112,6 +113,10 @@ public class SimScreen implements Screen {
         simCam.position.y = bomb.b2dbody.getPosition().y;
         simCam.update();
         renderer.setView(simCam);
+        System.out.println("the position on the x axis: " +  bomb.b2dbody.getPosition().x);
+        System.out.println("the position on the y axis: " +bomb.b2dbody.getPosition().y);
+        System.out.println("the linear veloicity in the x axis : " + bomb.b2dbody.getLinearVelocity().x);
+        System.out.println("the linear velocity in the y acis : " + bomb.b2dbody.getLinearVelocity().y);
     }
 
     @Override
