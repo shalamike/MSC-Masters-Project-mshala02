@@ -7,5 +7,6 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Dam extends InteractiveTiledObject{
     public Dam(World world, TiledMap map, Rectangle bounds) {
         super(world, map, bounds);
+        fixture.setUserData(this);
     }
 }

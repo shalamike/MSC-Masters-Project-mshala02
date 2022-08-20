@@ -31,6 +31,7 @@ import com.mygdx.game.PhysicsImp;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Bomb;
 import com.mygdx.game.tools.B2WorldCreator;
+import com.mygdx.game.tools.WorldContactListener;
 
 public class SimScreen implements Screen {
     private MyGdxGame sim;
@@ -74,8 +75,6 @@ public class SimScreen implements Screen {
         // initiallising box2d variables
         world = new World(new Vector2(0,0), true);
 
-        bomb = new Bomb(world);
-
 
 
 //        BodyDef bdef = new BodyDef();
@@ -89,6 +88,8 @@ public class SimScreen implements Screen {
 
         new B2WorldCreator(world, map);
 
+        //identifying collisions
+        world.setContactListener(new WorldContactListener());
 
     }
 
@@ -101,8 +102,8 @@ public class SimScreen implements Screen {
             //simCam.position.x += 1000 * dt;
             //bomb.setGravity(0);
             world.setGravity(new Vector2(0,-10));
-            bomb.b2dbody.applyLinearImpulse(new Vector2(200,bomb.getGravity()), bomb.b2dbody.getWorldCenter(), true);
-            //bomb.b2dbody.applyAngularImpulse(20,true);
+            bomb.b2dbody.applyLinearImpulse(new Vector2(20,bomb.getGravity()), bomb.b2dbody.getWorldCenter(), true);
+
         }
     }
 
@@ -113,16 +114,20 @@ public class SimScreen implements Screen {
         simCam.position.y = bomb.b2dbody.getPosition().y;
         simCam.update();
         renderer.setView(simCam);
-        System.out.println("the position on the x axis: " +  bomb.b2dbody.getPosition().x);
-        System.out.println("the position on the y axis: " +bomb.b2dbody.getPosition().y);
-        System.out.println("the linear veloicity in the x axis : " + bomb.b2dbody.getLinearVelocity().x);
-        System.out.println("the linear velocity in the y acis : " + bomb.b2dbody.getLinearVelocity().y);
+//        System.out.println("lift force of the bomb : " +  new PhysicsImp().liftForce(Bomb.radius,600, bomb.b2dbody.getLinearVelocity().x));
+//        System.out.println("the position on the x axis: " +  bomb.b2dbody.getPosition().x);
+//        System.out.println("the position on the y axis: " +bomb.b2dbody.getPosition().y);
+//        System.out.println("the linear veloicity in the x axis : " + bomb.b2dbody.getLinearVelocity().x);
+//        System.out.println("the linear velocity in the y acis : " + bomb.b2dbody.getLinearVelocity().y);
+//        System.out.println("would this have bounced:" + new PhysicsImp().WillItBounce(bomb.b2dbody.getLinearVelocity().x, bomb.b2dbody.getLinearVelocity().y, Bomb.bombDensity));
+//        System.out.println("the critical angle is: " + new PhysicsImp().criticalAngle(30));
+//        System.out.println("the bombs angle is: " +   Math.abs((float) Math.atan (bomb.b2dbody.getLinearVelocity().y/ bomb.b2dbody.getLinearVelocity().x) * 180/ (float)Math.PI) );
     }
 
     @Override
     public void render(float delta) {
         update(delta);
-        Gdx.gl.glClearColor(1,0,0,1);
+        Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
         sim.batch.setProjectionMatrix(simCam.projection);

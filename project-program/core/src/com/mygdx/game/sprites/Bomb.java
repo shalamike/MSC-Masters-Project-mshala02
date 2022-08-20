@@ -1,42 +1,27 @@
 package com.mygdx.game.sprites;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.PhysicsImp;
 
 public class Bomb {
-    public static final float radius = 3; // will make it private with getters and setters once i create the menu screen
-    public static final float bombDensity = 3.6f; // will make it private variable with getters and setters once i create the menu screen
-    public static final float RPM = 500;
+//    public static final float radius = 3; // will make it private with getters and setters once i create the menu screen
+//    public static final int bombDensity = 30; // will make it private variable with getters and setters once i create the menu screen
+//    public static final float RPM = 500;
 
     public World world; // this will be the world that mario will live inside
     public Body b2dbody; // box2d body
 
+    private int bombDensity;
+    private int radius;
     private int rotationalVelocity;
     private int gravity;
-
-    public int getBombspeed() {
-        return bombspeed;
-    }
-
-    public void setBombspeed(int bombspeed) {
-        this.bombspeed = bombspeed;
-    }
-
     private int bombspeed;
-
-
-
-    public int getRotationalVelocity(){
-        return this.rotationalVelocity;
-    }
-
-    public void setRotationalVelocity(int num){
-        this.rotationalVelocity = num;
-    }
 
 
     public Bomb(World world){
@@ -55,7 +40,13 @@ public class Bomb {
         CircleShape shape = new CircleShape(); // creating a circle for our fixture def for now
         shape.setRadius(radius/ PhysicsImp.UNITSCALE); // setting the circles radius (subject to change)
         fdef.shape = shape; // setting our shapes radius to the fixure def
-        b2dbody.createFixture(fdef); // setting the fixture def to our body.
+        b2dbody.createFixture(fdef).setUserData("bomb"); // setting the fixture def to our body.#
+        fdef.isSensor = true;
+
+        //creating an edge shape at the bottom of the bomb to detect collions
+//        EdgeShape base = new EdgeShape();
+//        base.set(new Vector2(radius);
+
     }
 
 
@@ -67,4 +58,21 @@ public class Bomb {
     public void setGravity(int gravity) {
         this.gravity = gravity;
     }
+
+    public int getBombspeed() {
+        return bombspeed;
+    }
+
+    public void setBombspeed(int bombspeed) {
+        this.bombspeed = bombspeed;
+    }
+
+    public int getRotationalVelocity(){
+        return this.rotationalVelocity;
+    }
+
+    public void setRotationalVelocity(int num){
+        this.rotationalVelocity = num;
+    }
+
 }

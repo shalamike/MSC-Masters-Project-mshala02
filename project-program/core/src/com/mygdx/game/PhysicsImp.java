@@ -10,18 +10,18 @@ public class PhysicsImp {
     public static final int S_HEIGHT = 759; // screeen height
     public static final int W_WIDTH = 10560 * 16; // world width
     public static final int W_HEIGHT = 50 * 16; // world height
-    public static final float UNITSCALE = 10; // this will scale up all our vector quantities to increase simulation speeds to something more realistic
+    public static final float UNITSCALE = 2; // this will scale up all our vector quantities to increase simulation speeds to something more realistic
     // setting up physical variables
     public static final float AIR_DENSITY = 1.225f;
 
     //setting the adjustable variables here
 
-    public float liftForce(int radius, int RPM, int velocityX){
+    public float liftForce(float radius, int RPM, float velocityX){
         //return vortex(bomb.getRotationalVelocity(), bomb.radius) * AIR_DENSITY * bomb.b2dbody.getLinearVelocity().x;
         return vortex(radius, RPM) * AIR_DENSITY * velocityX;
     }
 
-    public float vortex(int radius, int RPM){
+    public float vortex(float radius, int RPM){
         float rotationalVelocity = (float) (Math.PI * radius*2 * RPM);
         return (float) (rotationalVelocity * radius * Math.PI * 2);
     }
@@ -30,8 +30,8 @@ public class PhysicsImp {
         return (float) (18/(Math.sqrt(density)));
     }
 
-    public boolean WillItBounce(int x_vel, int y_vel, int density){
-        float angleOfIncidence = (float) Math.atan (x_vel/ y_vel);
+    public boolean WillItBounce(float x_vel, float y_vel, int density){
+        float angleOfIncidence = Math.abs((float) Math.atan (y_vel/x_vel) * 180/ (float)Math.PI) ;
         if (angleOfIncidence < criticalAngle(density)){
             return true;
         }

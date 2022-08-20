@@ -11,6 +11,6 @@ import com.mygdx.game.PhysicsImp;
 public class Water extends InteractiveTiledObject{
     public Water(World world, TiledMap map, Rectangle bounds) {
         super(world, map, bounds);
-
+        fixture.setUserData(this);
     }
 }
