@@ -12,5 +12,6 @@ public class Water extends InteractiveTiledObject{
     public Water(World world, TiledMap map, Rectangle bounds) {
         super(world, map, bounds);
         fixture.setUserData(this);
+        fixture.setRestitution(0.99f);
     }
 }

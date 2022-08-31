@@ -1,5 +1,4 @@
 android {
-    buildToolsVersion "30.0.1"
     compileSdkVersion 29
     sourceSets {
         main {

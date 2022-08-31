@@ -35,7 +35,7 @@ public class Hud implements Disposable {
     Label distanceToDamTextLabel;
 
     public Hud (SpriteBatch sb){
-        distanceToDam = 5;
+        distanceToDam = 8435;
         rpm = 720;
         speed = 200;
 
@@ -49,7 +49,7 @@ public class Hud implements Disposable {
         rpmIntLabel = new Label(String.format("%06d", rpm), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
         speedTextLabel = new Label("current speed of bomb (MPH)", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
         speedIntLabel = new Label (String.format("%03d", speed), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
-        distanceToDamTextLabel = new Label("Distancfe to dam (miles)", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
+        distanceToDamTextLabel = new Label("Distance to dam (miles)", new Label.LabelStyle(new BitmapFont(), Color.CORAL));
         distanceToDamIntLabel = new Label(String.format("%03d", distanceToDam), new Label.LabelStyle(new BitmapFont(), Color.CORAL));
 
         table.add(speedTextLabel).expandX().padTop(10);
@@ -61,6 +61,17 @@ public class Hud implements Disposable {
         table.add(distanceToDamIntLabel).expandX();
 
         stage.addActor(table);
+    }
+
+    public void calcDistance(float bombXCord ){
+        distanceToDam = 8434 - (int)bombXCord;
+        distanceToDamIntLabel.setText(String.format("%04d", distanceToDam));
+
+    }
+
+    public void calcSpeed (float bombSpeed){
+        speed = (int)bombSpeed;
+        speedIntLabel.setText(String.format("%03d", speed));
     }
 
     @Override
