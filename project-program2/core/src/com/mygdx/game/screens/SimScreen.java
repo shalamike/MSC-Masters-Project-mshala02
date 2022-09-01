@@ -102,7 +102,7 @@ public class SimScreen implements Screen {
             //simCam.position.x += 1000 * dt;
             //bomb.setGravity(0);
             world.setGravity(new Vector2(0,-10));
-            bomb.b2dbody.applyLinearImpulse(new Vector2(200,bomb.getGravity()), bomb.b2dbody.getWorldCenter(), true);
+            bomb.b2dbody.applyLinearImpulse(new Vector2(200,0), bomb.b2dbody.getWorldCenter(), true);
 
         }
     }
@@ -111,7 +111,7 @@ public class SimScreen implements Screen {
         handleInput(dt);
         world.step(1/60f, 6, 2);
         simCam.position.x = bomb.b2dbody.getPosition().x;
-        simCam.position.y = bomb.b2dbody.getPosition().y;
+        simCam.position.y = (PhysicsImp.S_HEIGHT / PhysicsImp.UNITSCALE)/2;
         simCam.update();
         renderer.setView(simCam);
         hud.calcDistance(bomb.b2dbody.getPosition().x);
