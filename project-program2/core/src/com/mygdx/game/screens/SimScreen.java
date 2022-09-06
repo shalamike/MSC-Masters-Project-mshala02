@@ -116,6 +116,7 @@ public class SimScreen implements Screen {
         renderer.setView(simCam);
         hud.calcDistance(bomb.b2dbody.getPosition().x);
         hud.calcSpeed(bomb.b2dbody.getLinearVelocity().x);
+//        hud.stage.act();
 
 //        System.out.println("lift force of the bomb : " +  new PhysicsImp().liftForce(Bomb.radius,600, bomb.b2dbody.getLinearVelocity().x));
 //        System.out.println("the position on the x axis: " +  bomb.b2dbody.getPosition().x);

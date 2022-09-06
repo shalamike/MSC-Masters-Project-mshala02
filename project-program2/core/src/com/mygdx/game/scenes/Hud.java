@@ -1,5 +1,7 @@
 package com.mygdx.game.scenes;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -8,12 +10,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.PhysicsImp;
+import com.mygdx.game.tools.Assets;
+
+import org.w3c.dom.Text;
 
 
 public class Hud implements Disposable {
@@ -22,25 +29,42 @@ public class Hud implements Disposable {
     // this is to ensure that the hud stays in place while the game moves
     public Viewport viewport;
 
+    private Skin skin;
+    private AssetManager assetManager;
+    private Assets assets;
+
     private Integer distanceToDam;
     private Integer rpm;
     private Integer speed;
     private static float scale = 1;
 
-    Label rpmIntLabel;
-    Label rpmTextLabel;
-    Label speedIntLabel;
-    Label speedTextLabel;
-    Label distanceToDamIntLabel;
-    Label distanceToDamTextLabel;
+    private Label rpmIntLabel;
+    private Label rpmTextLabel;
+    private Label speedIntLabel;
+    private Label speedTextLabel;
+    private Label distanceToDamIntLabel;
+    private Label distanceToDamTextLabel;
+
+    private TextButton isBeginSimPressed;
+    private TextButton isDropBombPressed;
+
 
     public Hud (SpriteBatch sb){
         distanceToDam = 8435;
         rpm = 720;
         speed = 200;
 
-        viewport = new FitViewport(PhysicsImp.S_WIDTH, PhysicsImp.S_HEIGHT, new OrthographicCamera());
+
+
+        viewport = new FitViewport(PhysicsImp.S_WIDTH , PhysicsImp.S_HEIGHT, new OrthographicCamera());
         stage =  new Stage (viewport, sb);
+        Gdx.input.setInputProcessor(stage);
+
+        createTable();
+
+    }
+
+    private void createTable(){
         Table table = new Table();
         table.top();
         table.setFillParent(true);
@@ -61,6 +85,8 @@ public class Hud implements Disposable {
         table.add(distanceToDamIntLabel).expandX();
 
         stage.addActor(table);
+
+        table.setDebug(true);//for seeing the lines in the table of the hud
     }
 
     public void calcDistance(float bombXCord ){

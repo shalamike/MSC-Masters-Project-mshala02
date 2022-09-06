@@ -10,15 +10,19 @@ import com.mygdx.game.screens.MainMenu;
 import com.mygdx.game.screens.SimScreen;
 
 public class MyGdxGame extends Game {
+	public static Integer SCREENS = 1;
+
 	public SpriteBatch batch;
 	private AssetManager assetManager;
 	Texture img;
+
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		//img = new Texture("badlogic.jpg");
-		setScreen(new SimScreen(this));
+		setScreen(new MainMenu(this, this));
+		System.out.println("windows open");
 	}
 
 	@Override
