@@ -14,17 +14,9 @@ public class Bomb {
     //    public static final float radius = 3; // will make it private with getters and setters once i create the menu screen
 //    public static final int bombDensity = 30; // will make it private variable with getters and setters once i create the menu screen
 //    public static final float RPM = 500;
-    public static int radius = 3; // setting the radius to a public static int as this will allow for it to be changed in the main menu
 
     public World world; // this will be the world that mario will live inside
     public Body b2dbody; // box2d body
-
-    private int bombDensity;
-    //    private int radius;
-    private int rotationalVelocity;
-    private int gravity;
-    private int bombspeed;
-
 
     public Bomb(World world){
         this.world = world;
@@ -40,7 +32,7 @@ public class Bomb {
         //defining the fixtures
         FixtureDef fdef = new FixtureDef(); // creating a new fixture def
         CircleShape shape = new CircleShape(); // creating a circle for our fixture def for now
-        shape.setRadius(radius/ PhysicsImp.UNITSCALE); // setting the circles radius (subject to change)
+        shape.setRadius(PhysicsImp.radius/ PhysicsImp.UNITSCALE); // setting the circles radius (subject to change)
         fdef.shape = shape; // setting our shapes radius to the fixure def
         b2dbody.createFixture(fdef).setUserData("bomb"); // setting the fixture def to our body.#
 //        fdef.restitution = 0.1f;
@@ -56,48 +48,5 @@ public class Bomb {
 //        Gdx.gl.glClearColor(1,1,1,1);
 //        Gdx.gl.glClear();
 //    }
-
-
-
-    public int getGravity() {
-        return gravity;
-    }
-
-    public void setGravity(int gravity) {
-        this.gravity = gravity;
-    }
-
-    public int getBombspeed() {
-        return bombspeed;
-    }
-
-    public void setBombspeed(int bombspeed) {
-        this.bombspeed = bombspeed;
-    }
-
-    public int getRotationalVelocity(){
-        return this.rotationalVelocity;
-    }
-
-    public void setRotationalVelocity(int num){
-        this.rotationalVelocity = num;
-    }
-
-    public int getBombDensity() {
-        return bombDensity;
-    }
-
-    public void setBombDensity(int bombDensity) {
-        this.bombDensity = bombDensity;
-    }
-
-    public int getRadius() {
-        return radius;
-    }
-
-    public void setRadius(int radius) {
-        this.radius = radius;
-    }
-
 
 }

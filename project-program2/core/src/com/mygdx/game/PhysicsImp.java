@@ -10,6 +10,9 @@ public class PhysicsImp {
     // setting up physical variables
     public static final float AIR_DENSITY = 1.225f;
 
+    //bomb properties
+    public static int radius = 6; // setting the radius to a public static int as this will allow for it to be changed in the main menu
+
     //setting the adjustable variables here
 
     public float liftForce(float radius, int RPM, float velocityX , int weightOfBomb){

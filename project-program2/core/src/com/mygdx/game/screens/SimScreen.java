@@ -30,6 +30,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.PhysicsImp;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.sprites.Bomb;
+import com.mygdx.game.sprites.Plane;
 import com.mygdx.game.tools.B2WorldCreator;
 import com.mygdx.game.tools.WorldContactListener;
 
@@ -54,7 +55,7 @@ public class SimScreen implements Screen {
 
     //Dynamic bodies/ the bomb and plane
     private Bomb bomb;
-
+    private Plane plane;
 
 
 
@@ -85,6 +86,7 @@ public class SimScreen implements Screen {
 
         //initialising the bomb
         bomb = new Bomb(world);
+        plane = new Plane(world);
 
         new B2WorldCreator(world, map);
 
@@ -98,13 +100,16 @@ public class SimScreen implements Screen {
     }
 
     public void handleInput(float dt){
+        boolean planeGoesUp = false;
         if (Gdx.input.isTouched()){
             //simCam.position.x += 1000 * dt;
             //bomb.setGravity(0);
             world.setGravity(new Vector2(0,-10));
-            bomb.b2dbody.applyLinearImpulse(new Vector2(200,0), bomb.b2dbody.getWorldCenter(), true);
-
+            bomb.b2dbody.applyLinearImpulse(new Vector2(0,0), bomb.b2dbody.getWorldCenter(), true);
+            planeGoesUp = true;
         }
+        if (planeGoesUp == true)
+            plane.b2dbody.applyForceToCenter(new Vector2(0,11), true);
     }
 
     public void update(float dt){

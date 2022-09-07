@@ -55,7 +55,6 @@ public class Hud implements Disposable {
         speed = 200;
 
 
-
         viewport = new FitViewport(PhysicsImp.S_WIDTH , PhysicsImp.S_HEIGHT, new OrthographicCamera());
         stage =  new Stage (viewport, sb);
         Gdx.input.setInputProcessor(stage);

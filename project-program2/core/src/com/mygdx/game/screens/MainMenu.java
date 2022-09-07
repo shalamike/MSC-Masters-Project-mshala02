@@ -67,11 +67,24 @@ public class MainMenu implements Screen {
     }
 
     public void handleInput(float delta){
+        if (MenuUI.rpmPressed== true){
+            System.out.println("rpmPressed");
+            MenuUI.rpmPressed = false;
+        }
+
+        if (MenuUI.radiusPressed== true){
+            System.out.println("radiusPressed");
+            String numRegexChecker = "[0-9]+";
+            if (MenuUI.radiusOutput.matches(numRegexChecker)){
+                int num = Integer.parseInt(MenuUI.radiusOutput);
+                PhysicsImp.radius = num;
+            } else
+            MenuUI.radiusPressed = false;
+        }
 
         if (MenuUI.startPressed== true){
             System.out.println("start sim");
             sim.setScreen(new SimScreen(menu));
-
         }
 
     }
