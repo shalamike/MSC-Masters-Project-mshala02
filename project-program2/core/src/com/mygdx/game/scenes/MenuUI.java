@@ -46,6 +46,7 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
     private Label Title;
 
     public static Boolean massPressed= false, radiusPressed = false, startPressed = false, rpmPressed = false, simSpeedPressed = false;
+
     OrthographicCamera cam;
 
     public MenuUI(MyGdxGame app){
@@ -112,13 +113,13 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
         table.left().center();
         table.setFillParent(true);
 
-        table.add(radiusButton);
-        table.add(setRadius);
+        table.add(radiusButton).padTop(5);
+        table.add(setRadius).padTop(5);
         table.row();
-        table.add(rpmButton);
-        table.add(setRPM);
+        table.add(rpmButton).padTop(5);
+        table.add(setRPM).padTop(5);
         table.row();
-        table.add(startButton);
+        table.add(startButton).padTop(20);
 
 
         stage.addActor(table);
