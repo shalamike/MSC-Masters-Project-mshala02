@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.PhysicsImp;
 
-public class InteractiveTiledObject {
+public abstract class InteractiveTiledObject {
     protected World world;
     protected TiledMap map;
     protected TiledMapTile tile;

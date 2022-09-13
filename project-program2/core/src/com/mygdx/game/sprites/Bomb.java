@@ -32,12 +32,12 @@ public class Bomb {
         //defining the fixtures
         FixtureDef fdef = new FixtureDef(); // creating a new fixture def
         CircleShape shape = new CircleShape(); // creating a circle for our fixture def for now
-        shape.setRadius(PhysicsImp.radius/ PhysicsImp.UNITSCALE); // setting the circles radius (subject to change)
+        shape.setRadius(PhysicsImp.RADIUS/ PhysicsImp.UNITSCALE); // setting the circles radius (subject to change)
         fdef.shape = shape; // setting our shapes radius to the fixure def
         b2dbody.createFixture(fdef).setUserData("bomb"); // setting the fixture def to our body.#
-//        fdef.restitution = 0.1f;
-        fdef.isSensor = true;
 
+        fdef.isSensor = false;
+//        fdef.restitution = 0.9f;
         //creating an edge shape at the bottom of the bomb to detect collions
 //        EdgeShape base = new EdgeShape();
 //        base.set(new Vector2(radius);

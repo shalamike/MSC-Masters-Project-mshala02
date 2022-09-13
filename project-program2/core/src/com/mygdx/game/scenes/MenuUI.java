@@ -33,19 +33,19 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
     private Stage stage;
 
     //textures for buttons
-    private Texture startTexture, rpmTexture, simSpeedTexture, massTexture, radiusTexture, airSpeedTexture;
-    private TextureRegion  startTextureRegion, rpmTextureRegion, simSpeedTextureRegion, massTextureRegion, radiusTextureRegion, airSpeedRegion;
-    private TextureRegionDrawable startTextureDrawable, rpmTextureDrawable, simSpeedTextureDrawable, massTextureDrawable, radiusTextureDrawable, airSpeedDrawable;
-    private ImageButton startButton, rpmButton, simSpeedButton, massButton, radiusButton, airSpeedButton;
+    private Texture startTexture, rpmTexture, simSpeedTexture, massTexture, radiusTexture, planeSpeedTexture;
+    private TextureRegion  startTextureRegion, rpmTextureRegion, simSpeedTextureRegion, massTextureRegion, radiusTextureRegion, planeSpeedRegion;
+    private TextureRegionDrawable startTextureDrawable, rpmTextureDrawable, simSpeedTextureDrawable, massTextureDrawable, radiusTextureDrawable, planeSpeedDrawable;
+    private ImageButton startButton, rpmButton, simSpeedButton, massButton, radiusButton, planeSpeedButton;
     private Skin skin;
-    private TextField setRPM, setRadius, setAirSpeed, setSimSpeed;
+    private TextField setRPM, setRadius, setPlaneSpeed, setSimSpeed;
 
-    public static String rpmOutput, airSpeedOutput, simSpeedOutput, radiusOutput;
+    public static String rpmOutput, airSpeedOutput, simSpeedOutput, radiusOutput, planeSpeedOutput;
 
 
     private Label Title;
 
-    public static Boolean massPressed= false, radiusPressed = false, startPressed = false, rpmPressed = false, simSpeedPressed = false;
+    public static Boolean massPressed= false, radiusPressed = false, startPressed = false, rpmPressed = false, simSpeedPressed = false, planeSpeedPressed = false;
 
     OrthographicCamera cam;
 
@@ -55,12 +55,15 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
         viewport = new FitViewport(PhysicsImp.S_WIDTH , PhysicsImp.S_WIDTH, cam);
 
         //creating the skin for text fields
-        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("assets/ui/uiskin.json"));
+
 
         //creating the start button
-        startTexture = new Texture(Gdx.files.internal("buttons/StartSim.png"));
+        startTexture = new Texture(Gdx.files.internal("assets/buttons/StartSim.png"));
         startTextureRegion = new TextureRegion(startTexture);
         startTextureDrawable = new TextureRegionDrawable(startTextureRegion);
+        startTextureDrawable.setLeftWidth(50f);
+        startTextureDrawable.setRightWidth(50f);
         startButton = new ImageButton(startTextureDrawable);
         startButton.getImage().setFillParent(true);
         //setting the response if the start sim button is clicked
@@ -68,14 +71,29 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 startPressed = true;
+            }
+        });
 
+        setPlaneSpeed = new TextField(Integer.toString(PhysicsImp.PLANE_SPEED) , skin);
+        //creating the set plane speed button
+        planeSpeedTexture = new Texture(Gdx.files.internal("assets/buttons/PlaneSpeed.png"));
+        planeSpeedRegion = new TextureRegion(planeSpeedTexture);
+        planeSpeedDrawable = new TextureRegionDrawable(planeSpeedRegion);
+        planeSpeedButton = new ImageButton(planeSpeedDrawable);
+        planeSpeedButton.getImage().setFillParent(true);
+        //setting the response if the start sim button is clicked
+        planeSpeedButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                planeSpeedPressed = true;
+                planeSpeedOutput = setPlaneSpeed.getText();
             }
         });
 
         //creating rpm textarea
         setRPM = new TextField("", skin);
         //creating the set RPM button
-        rpmTexture = new Texture(Gdx.files.internal("buttons/SetRPM.png"));
+        rpmTexture = new Texture(Gdx.files.internal("assets/buttons/SetRPM.png"));
         rpmTextureRegion = new TextureRegion(rpmTexture);
         rpmTextureDrawable = new TextureRegionDrawable(rpmTextureRegion);
         rpmButton = new ImageButton(rpmTextureDrawable);
@@ -88,22 +106,6 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
             }
         });
 
-        //creating rpm textarea
-        setRadius = new TextField("", skin);
-        //creating the set RPM button
-        radiusTexture = new Texture(Gdx.files.internal("buttons/SetRadius.png"));
-        radiusTextureRegion = new TextureRegion(radiusTexture);
-        radiusTextureDrawable = new TextureRegionDrawable(radiusTextureRegion);
-        radiusButton = new ImageButton(radiusTextureDrawable);
-        radiusButton.getImage().setFillParent(true);
-        radiusButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-//                super.clicked(event, x, y);
-                radiusPressed = true;
-                radiusOutput = setRadius.getText();
-            }
-        });
 
         stage = new Stage(viewport, app.batch);
         Gdx.input.setInputProcessor(stage);
@@ -113,11 +115,12 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
         table.left().center();
         table.setFillParent(true);
 
-        table.add(radiusButton).padTop(5);
-        table.add(setRadius).padTop(5);
-        table.row();
+
         table.add(rpmButton).padTop(5);
         table.add(setRPM).padTop(5);
+        table.row();
+        table.add(planeSpeedButton).padTop(5);
+        table.add(setPlaneSpeed);
         table.row();
         table.add(startButton).padTop(20);
 

@@ -34,6 +34,8 @@ import com.mygdx.game.sprites.Plane;
 import com.mygdx.game.tools.B2WorldCreator;
 import com.mygdx.game.tools.WorldContactListener;
 
+import org.lwjgl.Sys;
+
 public class SimScreen implements Screen {
     private MyGdxGame sim;
     Texture texture;
@@ -57,6 +59,8 @@ public class SimScreen implements Screen {
     private Bomb bomb;
     private Plane plane;
 
+    //creating the hud
+
 
 
     public SimScreen(MyGdxGame sim){
@@ -74,7 +78,7 @@ public class SimScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, 1 / PhysicsImp.UNITSCALE);
         simCam.position.set(simPort.getWorldWidth()/2, simPort.getWorldHeight()/2, 0 );
         // initiallising box2d variables
-        world = new World(new Vector2(0,0), true);
+        world = new World(new Vector2(0,PhysicsImp.GRAVITY), true);
 
 
 
@@ -100,16 +104,17 @@ public class SimScreen implements Screen {
     }
 
     public void handleInput(float dt){
-        boolean planeGoesUp = false;
         if (Gdx.input.isTouched()){
-            //simCam.position.x += 1000 * dt;
-            //bomb.setGravity(0);
-            world.setGravity(new Vector2(0,-10));
-            bomb.b2dbody.applyLinearImpulse(new Vector2(0,0), bomb.b2dbody.getWorldCenter(), true);
-            planeGoesUp = true;
+//            world.setGravity(new Vector2(0,-10));
+//            Vector2 initialSpeed = new Vector2(PhysicsImp.PLANE_SPEED, 0);
+//            plane.b2dbody.applyLinearImpulse(initialSpeed, plane.b2dbody.getWorldCenter(), true);
+//            bomb.b2dbody.applyLinearImpulse(initialSpeed, plane.b2dbody.getWorldCenter(), true);
+            System.out.println("is touched");
         }
-        if (planeGoesUp == true)
-            plane.b2dbody.applyForceToCenter(new Vector2(0,11), true);
+
+        if (hud.isStartPressed()){
+            System.out.println("is pressed");
+        }
     }
 
     public void update(float dt){
@@ -122,8 +127,13 @@ public class SimScreen implements Screen {
         hud.calcDistance(bomb.b2dbody.getPosition().x);
         hud.calcSpeed(bomb.b2dbody.getLinearVelocity().x);
 //        hud.stage.act();
-
-//        System.out.println("lift force of the bomb : " +  new PhysicsImp().liftForce(Bomb.radius,600, bomb.b2dbody.getLinearVelocity().x));
+//
+//        System.out.println(world.getGravity());
+//        System.out.println("total vortex strength :" + PhysicsImp.VORTEX(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM));
+//        System.out.println("total downward acceleration of the bomb: " + PhysicsImp.TOTAL_ACCELERATION( PhysicsImp.TOTAL_DOWNWARD_FORCE(PhysicsImp.MASS_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH), PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x)), PhysicsImp.MASS_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)));
+//        System.out.println("total downward force of bomb :" + ( PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH) - PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS,PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x))  );
+//        System.out.println("lift force of the bomb : " +  PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS,600, bomb.b2dbody.getLinearVelocity().x));
+//        System.out.println("weight of bomb: " +  PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH));
 //        System.out.println("the position on the x axis: " +  bomb.b2dbody.getPosition().x);
 //        System.out.println("the position on the y axis: " +bomb.b2dbody.getPosition().y);
 //        System.out.println("the linear veloicity in the x axis : " + bomb.b2dbody.getLinearVelocity().x);
@@ -151,6 +161,7 @@ public class SimScreen implements Screen {
     public void resize(int width, int height) {
         simCam.setToOrtho(false, width, height);
         simPort.update(width, height);
+        hud.resize(width,height);
     }
 
     @Override
