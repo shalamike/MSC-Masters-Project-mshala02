@@ -1,0 +1,19 @@
+airplanes.png
+size: 103, 132
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flying_away_plane-removebg-preview
+  rotate: false
+  xy: 0, 0
+  size: 103, 90
+  orig: 103, 90
+  offset: 0, 0
+  index: -1
+upright_pane-removebg-preview
+  rotate: false
+  xy: 0, 90
+  size: 93, 42
+  orig: 93, 42
+  offset: 0, 0
+  index: -1
