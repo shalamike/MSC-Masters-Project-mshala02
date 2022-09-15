@@ -33,19 +33,19 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
     private Stage stage;
 
     //textures for buttons
-    private Texture startTexture, rpmTexture, simSpeedTexture, massTexture, radiusTexture, planeSpeedTexture;
-    private TextureRegion  startTextureRegion, rpmTextureRegion, simSpeedTextureRegion, massTextureRegion, radiusTextureRegion, planeSpeedRegion;
-    private TextureRegionDrawable startTextureDrawable, rpmTextureDrawable, simSpeedTextureDrawable, massTextureDrawable, radiusTextureDrawable, planeSpeedDrawable;
-    private ImageButton startButton, rpmButton, simSpeedButton, massButton, radiusButton, planeSpeedButton;
+    private Texture startTexture, rpmTexture, simSpeedTexture,  planeSpeedTexture, distanceTexture;
+    private TextureRegion  startTextureRegion, rpmTextureRegion, simSpeedTextureRegion, distanceRegion, planeSpeedRegion;
+    private TextureRegionDrawable startTextureDrawable, rpmTextureDrawable, simSpeedTextureDrawable, distanceDrawable, planeSpeedDrawable;
+    private ImageButton startButton, rpmButton, simSpeedButton,   planeSpeedButton, distanceButton;
     private Skin skin;
-    private TextField setRPM, setRadius, setPlaneSpeed, setSimSpeed;
+    private TextField setRPM,  setPlaneSpeed, setSimSpeed, setDistance;
 
-    public static String rpmOutput, airSpeedOutput, simSpeedOutput, radiusOutput, planeSpeedOutput;
+    public static String distanceOutput, simSpeedOutput, radiusOutput, planeSpeedOutput;
 
 
     private Label Title;
 
-    public static Boolean massPressed= false, radiusPressed = false, startPressed = false, rpmPressed = false, simSpeedPressed = false, planeSpeedPressed = false;
+    public static Boolean radiusPressed = false, startPressed = false, rpmPressed = false, simSpeedPressed = false, planeSpeedPressed = false, distancePressed = false;
 
     OrthographicCamera cam;
 
@@ -106,6 +106,38 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
             }
         });
 
+        setSimSpeed = new TextField(Float.toString(PhysicsImp.UNITSCALE / 10) , skin);
+        //creating the set plane speed button
+        simSpeedTexture = new Texture(Gdx.files.internal("assets/buttons/SetSimSpeed.png"));
+        simSpeedTextureRegion = new TextureRegion(simSpeedTexture);
+        simSpeedTextureDrawable = new TextureRegionDrawable(simSpeedTextureRegion);
+        simSpeedButton = new ImageButton(simSpeedTextureDrawable);
+        planeSpeedButton.getImage().setFillParent(true);
+        //setting the response if the start sim button is clicked
+        simSpeedButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                simSpeedPressed = true;
+                simSpeedOutput = setSimSpeed.getText();
+            }
+        });
+
+        setDistance = new TextField(Float.toString(PhysicsImp.START_DISTANCE / 100) , skin);
+        //creating the set plane speed button
+        distanceTexture = new Texture(Gdx.files.internal("assets/buttons/SetDistance.png"));
+        distanceRegion = new TextureRegion(distanceTexture);
+        distanceDrawable = new TextureRegionDrawable(distanceRegion);
+        distanceButton = new ImageButton(distanceDrawable);
+        distanceButton.getImage().setFillParent(true);
+        //setting the response if the start sim button is clicked
+        distanceButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                distancePressed = true;
+                distanceOutput = setDistance.getText();
+            }
+        });
+
 
         stage = new Stage(viewport, app.batch);
         Gdx.input.setInputProcessor(stage);
@@ -120,7 +152,13 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
         table.add(setRPM).padTop(5);
         table.row();
         table.add(planeSpeedButton).padTop(5);
-        table.add(setPlaneSpeed);
+        table.add(setPlaneSpeed).padTop(5);
+        table.row();
+        table.add(distanceButton).padTop(5);
+        table.add(setDistance).padTop(5);
+        table.row();
+        table.add(simSpeedButton).padTop(5);
+        table.add(setSimSpeed).padTop(5);
         table.row();
         table.add(startButton).padTop(20);
 

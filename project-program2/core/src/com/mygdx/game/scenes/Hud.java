@@ -46,15 +46,12 @@ public class Hud implements Disposable {
     private Texture startTexture, dropBombTexture, backToMenuTexture;
     private TextureRegion startTextureRegion, dropBombTextureRegion, backToMenuTextureRegion;
     private TextureRegionDrawable startTextureDrawable, dropBombTextureDrawable, backToMenuTextureDrawable;
-
-
-
     private ImageButton startButton, dropButton, backToMenuButton;
     private Skin skin;
 
-    private boolean isStartPressed;
-    private boolean isDropBombPressed;
-    private boolean isBackToMenuPressed;
+    public static boolean isStartPressed;
+    public static boolean isDropBombPressed;
+    public static boolean isBackToMenuPressed;
 
     public Hud (SpriteBatch sb){
         distanceToDam = 8435;
@@ -80,8 +77,6 @@ public class Hud implements Disposable {
             }
         });
 
-
-
         //creating the drop bomb
         dropBombTexture = new Texture(Gdx.files.internal("buttons/DropBomb.png"));
         dropBombTextureRegion = new TextureRegion(dropBombTexture);
@@ -93,7 +88,6 @@ public class Hud implements Disposable {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 isDropBombPressed = true;
-                PhysicsImp.GRAVITY=10;
 
             }
         });
@@ -106,20 +100,11 @@ public class Hud implements Disposable {
         backToMenuButton.getImage().setFillParent(true);
         //setting the response if the start sim button is clicked
         backToMenuButton.addListener(new ClickListener(){
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                isBackToMenuPressed = true;
-//
-//            }
-
             @Override
-            public boolean isPressed() {
-//                return super.isPressed();
-                System.out.println("start pressed");
+            public void clicked(InputEvent event, float x, float y) {
                 isBackToMenuPressed = true;
-                return true;
-            }
 
+            }
         });
 
 
@@ -166,38 +151,13 @@ public class Hud implements Disposable {
         speedIntLabel.setText(String.format("%03d", speed));
     }
 
+    public void resize(int width, int height){
+        viewport.update(width, height);
+    }
+
     @Override
     public void dispose() {
         stage.dispose();
-    }
-
-    public void resize(int width, int height){
-        viewport.update(width,height);
-    }
-
-    public boolean isBackToMenuPressed() {
-        return isBackToMenuPressed;
-    }
-
-    public void setBackToMenuPressed(boolean backToMenuPressed) {
-        isBackToMenuPressed = backToMenuPressed;
-    }
-
-
-    public boolean isDropBombPressed() {
-        return isDropBombPressed;
-    }
-
-    public void setDropBombPressed(boolean dropBombPressed) {
-        isDropBombPressed = dropBombPressed;
-    }
-
-    public boolean isStartPressed() {
-        return isStartPressed;
-    }
-
-    public void setStartPressed(boolean startPressed) {
-        isStartPressed = startPressed;
     }
 }
 

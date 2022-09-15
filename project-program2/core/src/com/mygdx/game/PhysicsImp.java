@@ -9,7 +9,6 @@ public class PhysicsImp {
 
     // setting up physical variables
     public static final float AIR_DENSITY = 1.225f;
-    public static final int GRAVITY_AND_LIFT_SCALE = 30;
 
     //bomb properties
     public static final int BOMB_DENSITY = 2181;
@@ -17,19 +16,27 @@ public class PhysicsImp {
     public static int RADIUS = 6; // setting the radius to a public static int as this will allow for it to be changed in the main menu
     public static int BOMB_RPM = 600;
     public static int PLANE_SPEED = 200;
+    public static int CRITICAL_ANGLE = 8;
 
     //sim properties
+    public static int START_DISTANCE = 120000;
     public static float UNITSCALE = 20; // this will scale up all our vector quantities to increase simulation speeds to something more realistic
-    public static int GRAVITY = 0;
-    public static boolean planeFlyAway = false, bombSinks = false, damDestroyed = false;
+    public static boolean PLANE_FLY_AWAY = false, BOMB_SINKS = false, DAM_DESTROYED = false, BOMB_HITS_WATER = false;
+
+    //for destroying layers to enable the bomb to sink or the dam to be destroyed
+    public static final short DEFAULT_BIT = 1;
+    public static final short BOMB_BIT = 2;
+    public static short WATER_BIT = 4;
+    public static final short DAM_BIT = 8;
+    public static final short DESTROYED_BIT = 16;//may not need this
 
     public static float WEIGHT_OF_BOMB(int radius, int density, int length){
         float weight = MASS_OF_BOMB(radius, density, length) * 10;
         return weight;
     }
 
-    public static float MASS_OF_BOMB(int length, int density, int radius){
-        float mass = (float) (Math.PI * length * density * (radius^2));
+    public static float MASS_OF_BOMB(int radius, int density, int length){
+        float mass = (float) (Math.PI * length * density * (radius*radius));
         return mass;
     }
 
@@ -39,7 +46,7 @@ public class PhysicsImp {
     }
 
     public static float VORTEX(int radius, float RPM){
-        float vortexStrength = (float) (2 * AIR_DENSITY * (RPM  * 0.10472f) * (float)(radius ^ 2)) ;
+        float vortexStrength = (float) (2 * AIR_DENSITY * (RPM  * 0.10472f) * (float)(radius * radius)) ;
         return (float) (vortexStrength);
     }
 
@@ -47,21 +54,26 @@ public class PhysicsImp {
         return (downForce - liftForce);
     }
 
-    public static int TOTAL_ACCELERATION(float downForce, float mass){
-        return (int)(Math.round(downForce/mass));
+    public static float TOTAL_ACCELERATION(float totalDownForce, float mass){
+        return ((totalDownForce /mass));
     }
 
-    public static float criticalAngle(int density){
-        return (float) (18/(Math.sqrt(density)));
+//    public static float CRITICAL_ANGLE(int density){
+//        return (float) (18/(Math.sqrt(density)));
+//    }
+
+    public static float ANGLE_OF_INCIDENCE(float x_vel, float y_vel){
+        float angleOfIncidence = Math.abs((float) Math.atan (y_vel/x_vel) * 180/ (float)Math.PI);
+        return angleOfIncidence;
     }
 
-    public static boolean WillItBounce(float x_vel, float y_vel, int density){
-        float angleOfIncidence = Math.abs((float) Math.atan (y_vel/x_vel) * 180/ (float)Math.PI) ;
-        if (angleOfIncidence < criticalAngle(density)){
+    public static boolean WillItBounce(float angleOfIncidence){
+        if (angleOfIncidence < CRITICAL_ANGLE){
             return true;
         }
         else{
             return  false;
         }
     }
+
 }

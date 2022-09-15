@@ -22,7 +22,7 @@ public class Plane {
 
     public void definePlane(){
         BodyDef bdef = new BodyDef(); // creating a new body definition for the bomb
-        bdef.position.set(120000 / PhysicsImp.UNITSCALE, ((400 + PhysicsImp.RADIUS) / PhysicsImp.UNITSCALE)); // temporarily setting bomb position
+        bdef.position.set(PhysicsImp.START_DISTANCE / PhysicsImp.UNITSCALE, ((600 + PhysicsImp.RADIUS) / PhysicsImp.UNITSCALE)); // temporarily setting bomb position
 
         bdef.type = BodyDef.BodyType.DynamicBody; // setting the bombs body to dynamic body
         b2dbody = world.createBody(bdef);//now we have the box2d body defined, we can create the body in our game world
@@ -32,7 +32,8 @@ public class Plane {
         shape.setRadius(20/ PhysicsImp.UNITSCALE); // setting the circles radius (subject to change)
         fdef.shape = shape; // setting our shapes radius to the fixure def
         b2dbody.createFixture(fdef).setUserData("plane"); // setting the fixture def to our body.#
-        fdef.isSensor = false;
+//        fdef.restitution = 0.1f;
+        fdef.isSensor = true;
 
     }
 }

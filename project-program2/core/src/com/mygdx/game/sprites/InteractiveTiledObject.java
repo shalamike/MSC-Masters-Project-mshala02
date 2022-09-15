@@ -1,10 +1,12 @@
 package com.mygdx.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -37,7 +39,12 @@ public abstract class InteractiveTiledObject {
         shape.setAsBox((bounds.getWidth()/2) / PhysicsImp.UNITSCALE, (bounds.getHeight()/2)/ PhysicsImp.UNITSCALE);
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
+    }
 
+    public void setCategoryFilter(short filterBit){
+        Filter filter = new Filter();
+        filter.categoryBits = filterBit;
+        fixture.setFilterData(filter);
     }
 
 }

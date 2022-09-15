@@ -20,9 +20,12 @@ public class MainMenu implements Screen {
 
     private Viewport viewport;
     private Stage stage;
+    private Skin skin;
+    private AssetManager assetManager;
     private MenuUI menuUI;
     private Game sim;
 
+    private TextButton beginSim;
 
     public MainMenu(MyGdxGame menu, Game sim) {
         this.menu = menu;
@@ -90,9 +93,7 @@ public class MainMenu implements Screen {
 
     }
 
-    public void setScreen(){
 
-    }
 
 
     @Override
