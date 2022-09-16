@@ -31,9 +31,8 @@ public class Plane {
         CircleShape shape = new CircleShape(); // creating a circle for our fixture def for now
         shape.setRadius(20/ PhysicsImp.UNITSCALE); // setting the circles radius (subject to change)
         fdef.shape = shape; // setting our shapes radius to the fixure def
-        b2dbody.createFixture(fdef).setUserData("plane"); // setting the fixture def to our body.#
+        b2dbody.createFixture(fdef); // setting the fixture def to our body.#
 //        fdef.restitution = 0.1f;
-        fdef.isSensor = true;
 
     }
 }

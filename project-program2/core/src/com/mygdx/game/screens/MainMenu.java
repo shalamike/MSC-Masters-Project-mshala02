@@ -51,8 +51,6 @@ public class MainMenu implements Screen {
         update(delta);
         //stage.act();
 
-
-
     }
 
 
@@ -87,6 +85,7 @@ public class MainMenu implements Screen {
         }
 
         if (MenuUI.startPressed== true){
+            menu.dispose();
             System.out.println("start sim");
             sim.setScreen(new SimScreen(menu));
         }
@@ -119,6 +118,6 @@ public class MainMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

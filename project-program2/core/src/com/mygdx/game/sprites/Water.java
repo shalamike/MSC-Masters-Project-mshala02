@@ -12,7 +12,6 @@ import com.mygdx.game.PhysicsImp;
 public class Water extends InteractiveTiledObject{
     public Water(World world, TiledMap map, Rectangle bounds) {
         super(world, map, bounds);
-        setCategoryFilter(PhysicsImp.WATER_BIT);
         fixture.setUserData(this);
         fixture.setFriction(2f);
         fixture.setRestitution(0.95f);

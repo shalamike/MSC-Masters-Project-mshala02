@@ -75,6 +75,9 @@ public class SimScreen implements Screen {
         // creating the hud for the simulation
         hud = new Hud(sim.batch);
 
+        //getting the texture atlas for our sprite sheet
+        atlas = new TextureAtlas("sprites/sprite_sheet.txt");
+
         // initialising tiled variables
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("projectmap.tmx");
@@ -100,13 +103,15 @@ public class SimScreen implements Screen {
         //identifying collisions
         world.setContactListener(new WorldContactListener());
 
-        atlas = new TextureAtlas("sprite_sheet.atlas");
+
 
     }
 
     public TextureAtlas getAtlas(){
         return atlas;
     }
+
+
 
     @Override
     public void show() {
@@ -167,6 +172,7 @@ public class SimScreen implements Screen {
 
     public void update(float dt) throws InterruptedException {
         handleInput(dt);
+        bomb.update(dt);
         world.step(1/60f, 6, 2);
         simCam.position.x = bomb.b2dbody.getPosition().x;
         simCam.position.y = (PhysicsImp.S_HEIGHT / PhysicsImp.UNITSCALE)/2;
@@ -174,7 +180,7 @@ public class SimScreen implements Screen {
         renderer.setView(simCam);
         hud.calcDistance(bomb.b2dbody.getPosition().x);
         hud.calcSpeed(bomb.b2dbody.getLinearVelocity().x);
-//        hud.stage.act();
+        hud.stage.act();
 
 //        System.out.println(bomb.b2dbody.getPosition().y);
 //        System.out.println("mass of bomb: " +  PhysicsImp.MASS_OF_BOMB( PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY,PhysicsImp.BOMB_LENGTH));
@@ -205,10 +211,18 @@ public class SimScreen implements Screen {
         Gdx.gl.glClearColor(0,0,0,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
-        sim.batch.setProjectionMatrix(simCam.projection);
+
         hud.stage.draw();
 
+        sim.batch.setProjectionMatrix(simCam.combined);
+        sim.batch.begin();
+        bomb.draw(sim.batch);
+        sim.batch.end();
+
+
+
         b2dr.render(world, simCam.combined);
+
 
     }
 

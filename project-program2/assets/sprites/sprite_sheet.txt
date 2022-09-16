@@ -1,61 +1,61 @@
 sprite_sheet.png
-size: 1820, 848
+size: 1756, 1272
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-Circle_Rotation_0_
+circleRotation0
   rotate: false
   xy: 0, 0
-  size: 269, 293
-  orig: 269, 293
+  size: 439, 424
+  orig: 439, 424
   offset: 0, 0
-  index: -1
-Circle_Rotation_45_
+  index: 0
+circleRotation45
   rotate: false
-  xy: 538, 0
-  size: 269, 293
-  orig: 269, 293
+  xy: 878, 0
+  size: 439, 424
+  orig: 439, 424
   offset: 0, 0
-  index: -1
-Circle_Rotation_90_
+  index: 1
+circleRotation90
   rotate: false
-  xy: 807, 0
-  size: 269, 293
-  orig: 269, 293
+  xy: 1317, 0
+  size: 439, 424
+  orig: 439, 424
   offset: 0, 0
-  index: -1
-Circle_Rotation_135_
+  index: 2
+circleRotation135
   rotate: false
-  xy: 269, 0
-  size: 269, 293
-  orig: 269, 293
+  xy: 439, 0
+  size: 439, 424
+  orig: 439, 424
   offset: 0, 0
-  index: -1
+  index: 3
 explosion
   rotate: false
-  xy: 1034, 336
+  xy: 500, 424
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
-  index: -1
+  index: 4
 plane_flying_away
   rotate: false
-  xy: 0, 336
+  xy: 1012, 424
   size: 534, 467
   orig: 534, 467
   offset: 0, 0
-  index: -1
+  index: 5
 plane_upright
   rotate: false
-  xy: 1076, 0
+  xy: 0, 936
   size: 744, 336
   orig: 744, 336
   offset: 0, 0
-  index: -1
+  index: 6
 splash
   rotate: false
-  xy: 534, 336
+  xy: 0, 424
   size: 500, 500
   orig: 500, 500
   offset: 0, 0
-  index: -1
+  index: 7
