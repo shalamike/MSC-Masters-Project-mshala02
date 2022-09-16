@@ -37,11 +37,11 @@ public class Bomb extends Sprite{
 
         this.world = world;
         defineBomb();
-//
+
         stationaryBomb = new TextureRegion(getTexture(), 0,0,439, 424);
-//
+
         setBounds(0,0, PhysicsImp.RADIUS * 2 /PhysicsImp.UNITSCALE, PhysicsImp.RADIUS * 2 /PhysicsImp.UNITSCALE);
-//
+
         setRegion(stationaryBomb);
     }
 

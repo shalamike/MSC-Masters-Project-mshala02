@@ -96,7 +96,7 @@ public class SimScreen implements Screen {
 
         //initialising the bomb
         bomb = new Bomb(world, this);
-        plane = new Plane(world);
+        plane = new Plane(world, this);
 
         new B2WorldCreator(world, map);
 
@@ -173,6 +173,7 @@ public class SimScreen implements Screen {
     public void update(float dt) throws InterruptedException {
         handleInput(dt);
         bomb.update(dt);
+        plane.update(dt);
         world.step(1/60f, 6, 2);
         simCam.position.x = bomb.b2dbody.getPosition().x;
         simCam.position.y = (PhysicsImp.S_HEIGHT / PhysicsImp.UNITSCALE)/2;
@@ -217,6 +218,7 @@ public class SimScreen implements Screen {
         sim.batch.setProjectionMatrix(simCam.combined);
         sim.batch.begin();
         bomb.draw(sim.batch);
+        plane.draw(sim.batch);
         sim.batch.end();
 
 

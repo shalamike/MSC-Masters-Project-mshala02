@@ -15,8 +15,8 @@ public class PhysicsImp {
     public static final int BOMB_LENGTH = 1;
     public static int RADIUS = 12; // setting the radius to a public static int as this will allow for it to be changed in the main menu
     public static int BOMB_RPM = 600;
-    public static int PLANE_SPEED = 200;
-    public static int CRITICAL_ANGLE = 8;
+    public static int PLANE_SPEED = 80;
+    public static int CRITICAL_ANGLE = 16;
 
     //sim properties
     public static int START_DISTANCE = 120000;
