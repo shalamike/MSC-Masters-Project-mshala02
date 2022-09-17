@@ -38,10 +38,17 @@ public class Bomb extends Sprite{
     private FixtureDef fdef;
     private CircleShape shape;
 
+    private SimScreen screen;
+
 
 
     public Bomb(SimScreen screen){
         super(screen.getAtlas().findRegion("circleRotation0"));
+
+        this.screen = screen;
+        bdef = new BodyDef(); // creating a new body definition for the bomb
+        fdef = new FixtureDef(); // creating a new fixture def
+        shape = new CircleShape(); // creating a circle for our fixture def for now
 
         currentState = State.BOUNCING;
         previousState = State.BOUNCING;
@@ -110,9 +117,7 @@ public class Bomb extends Sprite{
     }
 
     public void defineBomb(){
-        bdef = new BodyDef(); // creating a new body definition for the bomb
-        fdef = new FixtureDef(); // creating a new fixture def
-        shape = new CircleShape(); // creating a circle for our fixture def for now
+
 //        BodyDef bdef = new BodyDef(); // creating a new body definition for the bomb
         bdef.position.set(PhysicsImp.START_DISTANCE / PhysicsImp.UNITSCALE, 600 / PhysicsImp.UNITSCALE); // temporarily setting bomb position
 
@@ -136,10 +141,40 @@ public class Bomb extends Sprite{
 
     }
 
+    public void explosion(){
+
+//        BodyDef bdef = new BodyDef(); // creating a new body definition for the bomb
+        Vector2 currentPosition = b2dbody.getPosition();
+        world.destroyBody(b2dbody);
+        bdef.position.set(currentPosition); // temporarily setting bomb position
+
+        bdef.type = BodyDef.BodyType.DynamicBody; // setting the bombs body to dynamic body
+        b2dbody = world.createBody(bdef);//now we have the box2d body defined, we can create the body in our game world
+
+        //defining the fixtures
+
+        shape.setRadius(32/ PhysicsImp.UNITSCALE); // setting the circles radius (subject to change)
+
+        fdef.filter.categoryBits = PhysicsImp.BOMB_BIT; //setting the bombs fixture def to the bomb bit
+        fdef.filter.maskBits = (short) (PhysicsImp.DEFAULT_BIT | PhysicsImp.WATER_BIT | PhysicsImp.DAM_BIT);
+
+
+
+        fdef.shape = shape; // setting our shapes radius to the fixure def
+        b2dbody.createFixture(fdef).setUserData("explosion"); // setting the fixture def to our body as well as the user data being bomb
+
+        fdef.isSensor = true;
+
+
+    }
+
     public void explode(){
         hasBombExploded = true;
-        setBounds(0,0,48/PhysicsImp.UNITSCALE,48/PhysicsImp.UNITSCALE);
+        setRegion(new TextureRegion(screen.getAtlas().findRegion("explosion", 4), 500, 424, 512, 512));
+        setBounds(0,0,64/PhysicsImp.UNITSCALE,64/PhysicsImp.UNITSCALE);
         System.out.println("bomb Explodes");
+        explosion();
+
     }
 
     public boolean isHasBombExploded() {
