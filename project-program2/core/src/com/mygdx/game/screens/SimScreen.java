@@ -148,6 +148,7 @@ public class SimScreen implements Screen {
 //                bomb.b2dbody.setLinearVelocity(new Vector2(bomb.b2dbody.getLinearVelocity().x * 0.9f , Math.abs(bomb.b2dbody.getLinearVelocity().y * 0.9f) ));
                 bomb.b2dbody.setLinearVelocity(0,0);
                 world.setGravity(new Vector2(0,-6));
+                PhysicsImp.WATER_BIT = 16;
             }
             PhysicsImp.BOMB_HITS_WATER = false;
         }
@@ -161,6 +162,7 @@ public class SimScreen implements Screen {
         //returning to main menu and resetting all static variables
         if (hud.isBackToMenuPressed){
             MenuUI.startPressed = false;
+            PhysicsImp.WATER_BIT = 4;
             PhysicsImp.PLANE_FLY_AWAY = false;
             PhysicsImp.BOMB_SINKS = false;
             sim.setScreen(new MainMenu(sim, sim));

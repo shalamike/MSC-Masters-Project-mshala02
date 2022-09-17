@@ -97,7 +97,10 @@ public class Bomb extends Sprite{
     public void update(float dt){
         setPosition(b2dbody.getPosition().x - getWidth() / 2 , b2dbody.getPosition().y - getHeight() /2);
         setRegion(getFrame(dt));
-
+//        if (PhysicsImp.BOMB_EXPLODES){
+//            fdef.filter.categoryBits = PhysicsImp.DESTROYED_BIT;
+//
+//        }
     }
 
     public void defineBomb(){

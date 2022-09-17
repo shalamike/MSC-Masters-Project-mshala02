@@ -26,7 +26,7 @@ public class PhysicsImp {
     //for destroying layers to enable the bomb to sink or the dam to be destroyed
     public static final short DEFAULT_BIT = 1;
     public static final short BOMB_BIT = 2;
-    public static final short WATER_BIT = 4;
+    public static short WATER_BIT = 4;
     public static final short DAM_BIT = 8;
     public static final short DESTROYED_BIT = 16;//may not need this
 

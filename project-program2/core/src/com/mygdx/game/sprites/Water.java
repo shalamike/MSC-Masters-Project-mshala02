@@ -23,7 +23,7 @@ public class Water extends InteractiveTiledObject{
 //        fixture.setRestitution(0);
         Gdx.app.log("hit water", "");
         PhysicsImp.BOMB_HITS_WATER = true;
-        setCategoryFilter(PhysicsImp.DESTROYED_BIT);
+        setCategoryFilter(PhysicsImp.WATER_BIT);
     }
 
 
