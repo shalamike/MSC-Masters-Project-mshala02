@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.PhysicsImp;
+import com.mygdx.game.screens.SimScreen;
 
 public abstract class InteractiveTiledObject {
     protected World world;
@@ -22,9 +23,9 @@ public abstract class InteractiveTiledObject {
 
     protected Fixture fixture;
 
-    public InteractiveTiledObject(World world, TiledMap map, Rectangle bounds){
-        this.world = world;
-        this.map = map;
+    public InteractiveTiledObject(SimScreen screen, Rectangle bounds){
+        this.world = screen.getWorld();
+        this.map = screen.getMap();
         this.bounds = bounds;
 
         BodyDef bodyDef = new BodyDef();

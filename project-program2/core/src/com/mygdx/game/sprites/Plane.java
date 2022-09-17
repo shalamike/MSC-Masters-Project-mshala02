@@ -21,9 +21,9 @@ public class Plane  extends Sprite {
 
     private TextureRegion planeUpright;
 
-    public Plane(World world, SimScreen screen){
+    public Plane( SimScreen screen){
         super(screen.getAtlas().findRegion("plane_upright"));
-        this.world = world;
+        this.world = screen.getWorld();
         definePlane();
 
         planeUpright = new TextureRegion(getTexture(), 0, 936, 744, 336);

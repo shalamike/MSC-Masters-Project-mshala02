@@ -10,11 +10,15 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.PhysicsImp;
+import com.mygdx.game.screens.SimScreen;
 import com.mygdx.game.sprites.Dam;
 import com.mygdx.game.sprites.Water;
 
 public class B2WorldCreator {
-    public B2WorldCreator(World world, TiledMap map){
+    public B2WorldCreator(SimScreen screen){
+        World world = screen.getWorld();
+        TiledMap map = screen.getMap();
+        //creating the body and fixture variables
         BodyDef bodyDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fixtureDef = new FixtureDef();
@@ -24,7 +28,7 @@ public class B2WorldCreator {
         for(MapObject object :map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
-            new Water(world, map, rect);
+            new Water(screen, rect);
         }
 
         // getting the dam layer
@@ -40,7 +44,7 @@ public class B2WorldCreator {
 //            fixtureDef.shape = shape;
 //            body.createFixture(fixtureDef);
 
-            new Dam(world, map, rect);
+            new Dam(screen, rect);
         }
     }
 }

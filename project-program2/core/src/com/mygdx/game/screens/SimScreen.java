@@ -51,8 +51,10 @@ public class SimScreen implements Screen {
 
     // tiled variables
     private TmxMapLoader mapLoader;
+
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+
 
     //box 2d variables
     private World world;
@@ -95,10 +97,10 @@ public class SimScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         //initialising the bomb
-        bomb = new Bomb(world, this);
-        plane = new Plane(world, this);
+        bomb = new Bomb(this);
+        plane = new Plane( this);
 
-        new B2WorldCreator(world, map);
+        new B2WorldCreator(this);
 
         //identifying collisions
         world.setContactListener(new WorldContactListener());
@@ -106,24 +108,12 @@ public class SimScreen implements Screen {
 
 
     }
-
-    public TextureAtlas getAtlas(){
-        return atlas;
-    }
-
-
-
     @Override
     public void show() {
     }
 
     public void handleInput(float dt){
         if (Hud.isStartPressed){
-            //simCam.position.x += 1000 * dt;
-            //bomb.setGravity(0);
-//            world.setGravity(new Vector2(0,0));
-//            bomb.b2dbody.applyLinearImpulse(new Vector2(1,0), bomb.b2dbody.getWorldCenter(), true);
-//            plane.b2dbody.applyLinearImpulse(new Vector2(1,0), plane.b2dbody.getWorldCenter(), true);
             bomb.b2dbody.setLinearVelocity(PhysicsImp.PLANE_SPEED,0);
             plane.b2dbody.setLinearVelocity(PhysicsImp.PLANE_SPEED,0);
 
@@ -140,7 +130,6 @@ public class SimScreen implements Screen {
         if (PhysicsImp.PLANE_FLY_AWAY){
             plane.b2dbody.applyForceToCenter(new Vector2(0,PhysicsImp.TOTAL_ACCELERATION( PhysicsImp.TOTAL_DOWNWARD_FORCE(PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x), PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)), PhysicsImp.MASS_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH))), true);
             plane.b2dbody.applyLinearImpulse(new Vector2(0,1), plane.b2dbody.getWorldCenter(), true);
-//            PhysicsImp.PLANE_FLY_AWAY = false;
         }
 
         if (PhysicsImp.BOMB_HITS_WATER){
@@ -149,15 +138,16 @@ public class SimScreen implements Screen {
                 bomb.b2dbody.setLinearVelocity(0,0);
                 world.setGravity(new Vector2(0,-6));
                 PhysicsImp.WATER_BIT = 16;
+
             }
             PhysicsImp.BOMB_HITS_WATER = false;
         }
 
-        //i was just experimenting with sinking physics here
-//        if(bomb.b2dbody.getPosition().y >= 13 && bomb.b2dbody.getPosition().y <= 13.1){
-//            world.setGravity(new Vector2(0,-4));
-//            bomb.b2dbody.setLinearVelocity(0,0);
-//        }
+        if(bomb.b2dbody.getPosition().y <= 7){
+            world.setGravity(new Vector2(0,0));
+            bomb.b2dbody.setLinearVelocity(0,0);
+        }
+
 
         //returning to main menu and resetting all static variables
         if (hud.isBackToMenuPressed){
@@ -183,10 +173,10 @@ public class SimScreen implements Screen {
         hud.calcSpeed(bomb.b2dbody.getLinearVelocity().x);
         hud.stage.act();
 
-//        System.out.println(bomb.b2dbody.getPosition().y);
+        System.out.println(bomb.b2dbody.getPosition().y);
 //        System.out.println("mass of bomb: " +  PhysicsImp.MASS_OF_BOMB( PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY,PhysicsImp.BOMB_LENGTH));
 //        System.out.println("total vortex strength :" + PhysicsImp.VORTEX(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM));
-        System.out.println("total downward acceleration of the bomb: " + PhysicsImp.TOTAL_ACCELERATION( PhysicsImp.TOTAL_DOWNWARD_FORCE(PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x), PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)), PhysicsImp.MASS_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)));
+//        System.out.println("total downward acceleration of the bomb: " + PhysicsImp.TOTAL_ACCELERATION( PhysicsImp.TOTAL_DOWNWARD_FORCE(PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x), PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)), PhysicsImp.MASS_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)));
 //        System.out.println("total downward force of bomb :" + ( PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH) - PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS,PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x))  );
 //        System.out.println("lift force of the bomb : " +  PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS,PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x));
 //        System.out.println("weight of bomb: " +  PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH));
@@ -259,4 +249,17 @@ public class SimScreen implements Screen {
 //        b2dr.dispose();
 
     }
+
+    public TiledMap getMap() {
+        return map;
+    }
+    public TextureAtlas getAtlas(){
+        return atlas;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+
 }

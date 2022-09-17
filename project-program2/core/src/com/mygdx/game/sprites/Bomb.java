@@ -27,6 +27,8 @@ public class Bomb extends Sprite{
     public State currentState; // creating two states to keep track of when to change states
     public State previousState;
     private Animation<TextureRegion> bombSpinning; //
+    private TextureRegion stationaryBomb;
+    private TextureRegion explosion;
 
     private boolean isSpinning;
 
@@ -36,9 +38,9 @@ public class Bomb extends Sprite{
     private FixtureDef fdef;
     private CircleShape shape;
 
-    private TextureRegion stationaryBomb;
 
-    public Bomb(World world, SimScreen screen){
+
+    public Bomb(SimScreen screen){
         super(screen.getAtlas().findRegion("circleRotation0"));
 
         currentState = State.BOUNCING;
@@ -56,7 +58,7 @@ public class Bomb extends Sprite{
         fdef = new FixtureDef(); // creating a new fixture def
         shape = new CircleShape(); // creating a circle for our fixture def for now
 
-        this.world = world;
+        this.world = screen.getWorld();
         defineBomb();
 
         stationaryBomb = new TextureRegion(getTexture(), 0,0,439, 439);
@@ -122,11 +124,8 @@ public class Bomb extends Sprite{
         fdef.shape = shape; // setting our shapes radius to the fixure def
         b2dbody.createFixture(fdef).setUserData("bomb"); // setting the fixture def to our body as well as the user data being bomb
 
-        fdef.isSensor = false;
-//        fdef.restitution = 0.9f;
-        //creating an edge shape at the bottom of the bomb to detect collions
-//        EdgeShape base = new EdgeShape();
-//        base.set(new Vector2(radius);
+        fdef.isSensor = true;
+
 
     }
 
