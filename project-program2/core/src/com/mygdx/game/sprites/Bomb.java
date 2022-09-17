@@ -23,14 +23,14 @@ public class Bomb extends Sprite{
     public Body b2dbody; // box2d body
 
     //creating states depending on whether or not the bomb is sinking or bouncing
-    public enum State{BOUNCING, SINKING}
+    public enum State{BOUNCING, SINKING, EXPLODE}
     public State currentState; // creating two states to keep track of when to change states
     public State previousState;
     private Animation<TextureRegion> bombSpinning; //
     private TextureRegion stationaryBomb;
     private TextureRegion explosion;
 
-    private boolean isSpinning;
+    private boolean hasBombExploded, isBouncing, isSinking;
 
     private float stateTimer;
 
@@ -50,28 +50,29 @@ public class Bomb extends Sprite{
         Array<TextureRegion> frames = new Array<TextureRegion>(); //creating an array for our frames to animate
         for (int i =0 ; i<3 ; i++)
             frames.add(new TextureRegion(getTexture(), i * 439, 0, 439,439));  //creating a for loop to add the appropriate images to our animation
-        bombSpinning = new Animation<>(1f, frames); // animating our frames like a flip book with each one lasting 0.1f will change according to rpm
-//        frames.clear();
+        bombSpinning = new Animation<>(0.1f, frames); // animating our frames like a flip book with each one lasting 0.1f will change according to rpm
+        frames.clear();
 
-
-        bdef = new BodyDef(); // creating a new body definition for the bomb
-        fdef = new FixtureDef(); // creating a new fixture def
-        shape = new CircleShape(); // creating a circle for our fixture def for now
 
         this.world = screen.getWorld();
         defineBomb();
 
         stationaryBomb = new TextureRegion(getTexture(), 0,0,439, 439);
 
+
         setBounds(0,0, PhysicsImp.RADIUS * 2 /PhysicsImp.UNITSCALE, PhysicsImp.RADIUS * 2 /PhysicsImp.UNITSCALE);
 
         setRegion(stationaryBomb);
+
+        explosion = new TextureRegion(screen.getAtlas().findRegion("explosion", 4), 500, 424, 512, 512);
     }
 
     //checking to see if the bombs state is sinking or bouncing
     public State getState(){
-        if(b2dbody.getLinearVelocity().x == 0 ) //if bombs velocity is 0 then it must be sinking
+        if(b2dbody.getLinearVelocity().x < 0.1 ) //if bombs velocity is 0 then it must be sinking
             return State.SINKING;
+        else if (hasBombExploded)
+            return State.EXPLODE;
         else
             return State.BOUNCING;
     }
@@ -81,6 +82,9 @@ public class Bomb extends Sprite{
 
         TextureRegion region;
         switch (currentState){
+            case EXPLODE:
+                region = explosion;
+                break;
             case SINKING:
                 region = stationaryBomb;
                 break;
@@ -106,6 +110,9 @@ public class Bomb extends Sprite{
     }
 
     public void defineBomb(){
+        bdef = new BodyDef(); // creating a new body definition for the bomb
+        fdef = new FixtureDef(); // creating a new fixture def
+        shape = new CircleShape(); // creating a circle for our fixture def for now
 //        BodyDef bdef = new BodyDef(); // creating a new body definition for the bomb
         bdef.position.set(PhysicsImp.START_DISTANCE / PhysicsImp.UNITSCALE, 600 / PhysicsImp.UNITSCALE); // temporarily setting bomb position
 
@@ -127,6 +134,36 @@ public class Bomb extends Sprite{
         fdef.isSensor = true;
 
 
+    }
+
+    public void explode(){
+        hasBombExploded = true;
+        setBounds(0,0,48/PhysicsImp.UNITSCALE,48/PhysicsImp.UNITSCALE);
+        System.out.println("bomb Explodes");
+    }
+
+    public boolean isHasBombExploded() {
+        return hasBombExploded;
+    }
+
+    public void setHasBombExploded(boolean hasBombExploded) {
+        this.hasBombExploded = hasBombExploded;
+    }
+
+    public boolean isBouncing() {
+        return isBouncing;
+    }
+
+    public void setBouncing(boolean bouncing) {
+        isBouncing = bouncing;
+    }
+
+    public boolean isSinking() {
+        return isSinking;
+    }
+
+    public void setSinking(boolean sinking) {
+        isSinking = sinking;
     }
 
 

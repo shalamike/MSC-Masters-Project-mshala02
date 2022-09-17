@@ -146,6 +146,7 @@ public class SimScreen implements Screen {
         if(bomb.b2dbody.getPosition().y <= 7){
             world.setGravity(new Vector2(0,0));
             bomb.b2dbody.setLinearVelocity(0,0);
+            bomb.explode();
         }
 
 
