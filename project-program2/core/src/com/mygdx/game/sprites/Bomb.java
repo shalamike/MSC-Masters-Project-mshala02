@@ -48,8 +48,8 @@ public class Bomb extends Sprite{
         Array<TextureRegion> frames = new Array<TextureRegion>(); //creating an array for our frames to animate
         for (int i =0 ; i<3 ; i++)
             frames.add(new TextureRegion(getTexture(), i * 439, 0, 439,439));  //creating a for loop to add the appropriate images to our animation
-        bombSpinning = new Animation<TextureRegion>(0.1f, frames); // animating our frames like a flip book with each one lasting 0.1f will change according to rpm
-        frames.clear();
+        bombSpinning = new Animation<>(1f, frames); // animating our frames like a flip book with each one lasting 0.1f will change according to rpm
+//        frames.clear();
 
 
         bdef = new BodyDef(); // creating a new body definition for the bomb
@@ -97,10 +97,7 @@ public class Bomb extends Sprite{
     public void update(float dt){
         setPosition(b2dbody.getPosition().x - getWidth() / 2 , b2dbody.getPosition().y - getHeight() /2);
         setRegion(getFrame(dt));
-//        if (PhysicsImp.BOMB_EXPLODES){
-//            fdef.filter.categoryBits = PhysicsImp.DESTROYED_BIT;
-//
-//        }
+
     }
 
     public void defineBomb(){
