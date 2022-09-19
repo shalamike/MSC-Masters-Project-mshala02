@@ -156,7 +156,7 @@ public class SimScreen implements Screen {
             PhysicsImp.WATER_BIT = 4;
             PhysicsImp.PLANE_FLY_AWAY = false;
             PhysicsImp.BOMB_SINKS = false;
-            sim.setScreen(new MainMenu(sim, sim));
+            sim.setScreen(new SimOver(sim));
             dispose();
         }
     }
@@ -174,7 +174,7 @@ public class SimScreen implements Screen {
         hud.calcSpeed(bomb.b2dbody.getLinearVelocity().x);
         hud.stage.act();
 
-        System.out.println(bomb.b2dbody.getPosition().y);
+//        System.out.println(bomb.b2dbody.getPosition().y);
 //        System.out.println("mass of bomb: " +  PhysicsImp.MASS_OF_BOMB( PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY,PhysicsImp.BOMB_LENGTH));
 //        System.out.println("total vortex strength :" + PhysicsImp.VORTEX(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM));
 //        System.out.println("total downward acceleration of the bomb: " + PhysicsImp.TOTAL_ACCELERATION( PhysicsImp.TOTAL_DOWNWARD_FORCE(PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x), PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)), PhysicsImp.MASS_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)));

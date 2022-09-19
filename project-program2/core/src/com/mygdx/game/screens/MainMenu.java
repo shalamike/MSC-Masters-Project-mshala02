@@ -25,7 +25,7 @@ public class MainMenu implements Screen {
     private MenuUI menuUI;
     private Game sim;
 
-    private TextButton beginSim;
+
 
     public MainMenu(MyGdxGame menu, Game sim) {
         this.menu = menu;
@@ -65,15 +65,6 @@ public class MainMenu implements Screen {
             MenuUI.rpmPressed = false;
         }
 
-        if (MenuUI.radiusPressed== true){
-            System.out.println("radiusPressed");
-            String numRegexChecker = "[0-9]+";
-            if (MenuUI.radiusOutput.matches(numRegexChecker)){
-                int num = Integer.parseInt(MenuUI.radiusOutput);
-                PhysicsImp.RADIUS = num;
-            }
-            MenuUI.radiusPressed = false;
-        }
 
         if (MenuUI.planeSpeedPressed == true){
             String numRegexChecker = "[0-9]+";

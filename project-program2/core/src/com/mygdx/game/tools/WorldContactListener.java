@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.sprites.Dam;
 import com.mygdx.game.sprites.Water;
 
 public class WorldContactListener implements ContactListener {
@@ -32,11 +33,24 @@ public class WorldContactListener implements ContactListener {
                 ((Water) object.getUserData()).onWaterCollision();
             }
         }
+
+        if ((fixtureA.getUserData() == "explosion" ) || (fixtureB.getUserData() == "explosion" )){
+
+            //setting the bomb depending on which is found in its user data to either fixture A or be to
+            Fixture bomb = fixtureA.getUserData() == "explosion" ? fixtureA : fixtureB;
+            Fixture object = bomb == fixtureA ? fixtureB : fixtureA;
+
+            //checking to see if the object the bomb collided into is not null and is specificially created from the Water class
+            if (object.getUserData() != null && Dam.class.isAssignableFrom(object.getUserData().getClass())){
+                ((Dam) object.getUserData()).onExplosionCollision();
+            }
+        }
     }
+
+
 
     @Override
     public void endContact(Contact contact) {
-        Gdx.app.log("end contact","");
     }
 
     @Override

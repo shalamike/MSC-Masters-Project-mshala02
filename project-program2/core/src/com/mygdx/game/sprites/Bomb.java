@@ -155,7 +155,7 @@ public class Bomb extends Sprite{
 
         shape.setRadius(32/ PhysicsImp.UNITSCALE); // setting the circles radius (subject to change)
 
-        fdef.filter.categoryBits = PhysicsImp.BOMB_BIT; //setting the bombs fixture def to the bomb bit
+        fdef.filter.categoryBits = PhysicsImp.EXPLOSION_BIT; //setting the bombs fixture def to the bomb bit
         fdef.filter.maskBits = (short) (PhysicsImp.DEFAULT_BIT | PhysicsImp.WATER_BIT | PhysicsImp.DAM_BIT);
 
 
@@ -172,7 +172,7 @@ public class Bomb extends Sprite{
         hasBombExploded = true;
         setRegion(new TextureRegion(screen.getAtlas().findRegion("explosion", 4), 500, 424, 512, 512));
         setBounds(0,0,64/PhysicsImp.UNITSCALE,64/PhysicsImp.UNITSCALE);
-        System.out.println("bomb Explodes");
+//        System.out.println("bomb Explodes");
         explosion();
 
     }
@@ -207,5 +207,7 @@ public class Bomb extends Sprite{
 //        Gdx.gl.glClearColor(1,1,1,1);
 //        Gdx.gl.glClear();
 //    }
+
+
 
 }
