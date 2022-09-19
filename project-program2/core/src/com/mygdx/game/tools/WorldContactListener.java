@@ -45,6 +45,18 @@ public class WorldContactListener implements ContactListener {
                 ((Dam) object.getUserData()).onExplosionCollision();
             }
         }
+
+        if ((fixtureA.getUserData() == "bomb" ) || (fixtureB.getUserData() == "bomb" )){
+
+            //setting the bomb depending on which is found in its user data to either fixture A or be to
+            Fixture bomb = fixtureA.getUserData() == "bomb" ? fixtureA : fixtureB;
+            Fixture object = bomb == fixtureA ? fixtureB : fixtureA;
+
+            //checking to see if the object the bomb collided into is not null and is specificially created from the Water class
+            if (object.getUserData() != null && Dam.class.isAssignableFrom(object.getUserData().getClass())){
+                ((Dam) object.getUserData()).bombDamaged();
+            }
+        }
     }
 
 

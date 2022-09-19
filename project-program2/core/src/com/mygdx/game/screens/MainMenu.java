@@ -61,8 +61,29 @@ public class MainMenu implements Screen {
 
     public void handleInput(float delta){
         if (MenuUI.rpmPressed== true){
-            System.out.println("rpmPressed");
+            String numRegexChecker = "[0-9]+";
+            if (MenuUI.rpmOutput.matches(numRegexChecker)){
+                int num =Integer.parseInt(MenuUI.rpmOutput);
+                if (num >= 0 && num <= 2000){
+                    PhysicsImp.BOMB_RPM = num;
+                }
+                else if ( num > 2000){
+                    PhysicsImp.BOMB_RPM = 2000;
+                }
+                else {
+                    PhysicsImp.BOMB_RPM = 0;
+                }
+            }
             MenuUI.rpmPressed = false;
+        }
+
+        if (MenuUI.simSpeedPressed== true){
+            String numRegexChecker = "[0-9]+";
+            if (MenuUI.simSpeedOutput.matches(numRegexChecker)){
+                float num =Integer.parseInt(MenuUI.simSpeedOutput);
+                PhysicsImp.UNITSCALE = num * 10;
+            }
+            MenuUI.simSpeedPressed = false;
         }
 
 
@@ -70,10 +91,34 @@ public class MainMenu implements Screen {
             String numRegexChecker = "[0-9]+";
             if (MenuUI.planeSpeedOutput.matches(numRegexChecker)){
                 int num = Integer.parseInt(MenuUI.planeSpeedOutput);
-                PhysicsImp.PLANE_SPEED = num;
+                if (num >=1 && num <= 250){
+                    PhysicsImp.PLANE_SPEED = num;
+                } else if (num > 250){
+                    PhysicsImp.PLANE_SPEED = 250;
+                } else if (num < 1){
+                    PhysicsImp.PLANE_SPEED = 1;
+                }
             }
             MenuUI.planeSpeedPressed = false;
         }
+
+        if (MenuUI.distancePressed== true){
+            String numRegexChecker = "[0-9]+";
+            if (MenuUI.distanceOutput.matches(numRegexChecker)){
+                int num =Integer.parseInt(MenuUI.distanceOutput);
+                if (num >= 100 && num <= 168660){
+                    PhysicsImp.START_DISTANCE = num;
+                }
+                else if ( num > 168660){
+                    PhysicsImp.START_DISTANCE = 168660;
+                }
+                else if (num < 100){
+                    PhysicsImp.START_DISTANCE = 100;
+                }
+            }
+            MenuUI.distancePressed = false;
+        }
+
 
         if (MenuUI.startPressed== true){
             menu.dispose();

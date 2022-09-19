@@ -11,18 +11,13 @@ import com.mygdx.game.screens.SimScreen;
 
 public class Dam extends InteractiveTiledObject{
 
-    private TextureRegion damDestroyedTextureRegion;
-    private Texture damDestroyedTexture;
 
     public Dam(SimScreen screen, Rectangle bounds) {
         super(screen, bounds);
 
         fixture.setUserData(this);
         setCategoryFilter(PhysicsImp.DAM_BIT);
-
-
     }
-
 
     public void onExplosionCollision() {
         Gdx.app.log("dam Destroyed", "");
@@ -30,15 +25,12 @@ public class Dam extends InteractiveTiledObject{
 //        getCell().setTile(null);
         clearCells(getCells());
         PhysicsImp.DAM_DESTROYED = true;
-        draw();
     }
 
-    public void draw(){
-        damDestroyedTexture = new Texture("damDestroyed.png");
-        damDestroyedTextureRegion = new TextureRegion(damDestroyedTexture, body.getPosition().x, body.getPosition().y, damDestroyedTexture.getWidth(), damDestroyedTexture.getWidth());
-        setRegion(damDestroyedTextureRegion);
-        setBounds(body.getPosition().x, body.getPosition().y, damDestroyedTexture.getWidth(), damDestroyedTexture.getWidth());
+    public void bombDamaged(){
+        PhysicsImp.BOMB_DAMAGED = true;
     }
+
 
 
 

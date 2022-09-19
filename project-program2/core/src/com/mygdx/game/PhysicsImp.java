@@ -15,20 +15,20 @@ public class PhysicsImp {
     public static final int BOMB_LENGTH = 1;
     public static int RADIUS = 12; // setting the radius to a public static int as this will allow for it to be changed in the main menu
     public static int BOMB_RPM = 600;
-    public static int PLANE_SPEED = 00;
+    public static int PLANE_SPEED = 80;
     public static int CRITICAL_ANGLE = 16;
 
     //sim properties
-    public static int START_DISTANCE = 168660;
+    public static int START_DISTANCE = 12000;
     public static float UNITSCALE = 20; // this will scale up all our vector quantities to increase simulation speeds to something more realistic
-    public static boolean PLANE_FLY_AWAY = false, BOMB_SINKS = false, DAM_DESTROYED = false, BOMB_HITS_WATER = false, BOMB_EXPLODES = false;
+    public static boolean PLANE_FLY_AWAY = false, BOMB_SINKS = false, DAM_DESTROYED = false, BOMB_HITS_WATER = false, BOMB_DAMAGED = false;
 
     //for destroying layers to enable the bomb to sink or the dam to be destroyed
     public static final short DEFAULT_BIT = 1;
     public static final short BOMB_BIT = 2;
     public static short WATER_BIT = 4;
     public static final short DAM_BIT = 8;
-    public static final short DESTROYED_BIT = 16;//may not need this
+    public static final short DESTROYED_BIT = 16;
     public static final short EXPLOSION_BIT = 32;
 
     public static float WEIGHT_OF_BOMB(int radius, int density, int length){

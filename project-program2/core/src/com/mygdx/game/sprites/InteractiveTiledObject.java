@@ -20,8 +20,6 @@ import com.mygdx.game.screens.SimScreen;
 
 public abstract class InteractiveTiledObject extends Sprite {
     private int tileSize;
-    private int damWidth;
-    private int damHeight;
 
     protected World world;
     protected TiledMap map;
@@ -37,8 +35,6 @@ public abstract class InteractiveTiledObject extends Sprite {
 
     public InteractiveTiledObject(SimScreen screen, Rectangle bounds){
         tileSize = 16;
-        damWidth = 208;
-        damHeight = 352;
         this.world = screen.getWorld();
         this.map = screen.getMap();
         this.bounds = bounds;
@@ -85,7 +81,7 @@ public abstract class InteractiveTiledObject extends Sprite {
 
     public void clearCells(Array<TiledMapTileLayer.Cell> cells){
         for (int i = 0; i < cells.size; i++){
-            TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
+//            TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
             TiledMapTileLayer.Cell cell= cells.get(i);
             cell.setTile(null);
         }

@@ -55,8 +55,8 @@ public class Hud implements Disposable {
 
     public Hud (SpriteBatch sb){
         distanceToDam = 8435;
-        rpm = 720;
-        speed = 200;
+        rpm = PhysicsImp.BOMB_RPM;
+        speed = PhysicsImp.PLANE_SPEED;
 
         viewport = new FitViewport(PhysicsImp.S_WIDTH , PhysicsImp.S_HEIGHT, new OrthographicCamera());
         stage =  new Stage (viewport, sb);

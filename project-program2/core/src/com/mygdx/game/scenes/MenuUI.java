@@ -40,12 +40,12 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
     private Skin skin;
     private TextField setRPM,  setPlaneSpeed, setSimSpeed, setDistance;
 
-    public static String distanceOutput, simSpeedOutput, radiusOutput, planeSpeedOutput;
+    public static String distanceOutput, simSpeedOutput, rpmOutput, planeSpeedOutput;
 
 
     private Label Title;
 
-    public static Boolean radiusPressed = false, startPressed = false, rpmPressed = false, simSpeedPressed = false, planeSpeedPressed = false, distancePressed = false;
+    public static Boolean startPressed = false, rpmPressed = false, simSpeedPressed = false, planeSpeedPressed = false, distancePressed = false;
 
     OrthographicCamera cam;
 
@@ -91,7 +91,7 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
         });
 
         //creating rpm textarea
-        setRPM = new TextField("", skin);
+        setRPM = new TextField(Integer.toString(PhysicsImp.BOMB_RPM), skin);
         //creating the set RPM button
         rpmTexture = new Texture(Gdx.files.internal("assets/buttons/SetRPM.png"));
         rpmTextureRegion = new TextureRegion(rpmTexture);
@@ -103,6 +103,7 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
             public void clicked(InputEvent event, float x, float y) {
 //                super.clicked(event, x, y);
                 rpmPressed = true;
+                rpmOutput = setRPM.getText();
             }
         });
 
@@ -122,7 +123,7 @@ public class MenuUI extends ApplicationAdapter implements Input.TextInputListene
             }
         });
 
-        setDistance = new TextField(Float.toString(PhysicsImp.START_DISTANCE / 100) , skin);
+        setDistance = new TextField(Float.toString(PhysicsImp.START_DISTANCE) , skin);
         //creating the set plane speed button
         distanceTexture = new Texture(Gdx.files.internal("assets/buttons/SetDistance.png"));
         distanceRegion = new TextureRegion(distanceTexture);

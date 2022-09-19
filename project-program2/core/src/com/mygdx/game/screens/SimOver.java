@@ -31,11 +31,20 @@ public class SimOver implements Screen {
         Table table = new Table();
         table.center();
         table.setFillParent(true);
+        Label successOrFailedLable;
 
-        Label simOverLabel = new Label("GAME OVER", font);
-        Label backToMenuLabel = new Label("Click to Play Again", font);
+        Label simOverLabel = new Label("SIMULATION OVER", font);
+        Label backToMenuLabel = new Label("Click to Start Again", font);
+        if (!PhysicsImp.DAM_DESTROYED){
+            successOrFailedLable = new Label("Failed To Destroy Dam", font);
+        } else{
+
+            successOrFailedLable = new Label("Dam was Successfully Destroyed", font);
+        }
 
         table.add(simOverLabel).expandX();
+        table.row();
+        table.add(successOrFailedLable).padTop(10f);
         table.row();
         table.add(backToMenuLabel).expandX().padTop(10f);
 
