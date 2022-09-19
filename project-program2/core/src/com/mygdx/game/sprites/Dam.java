@@ -16,18 +16,30 @@ public class Dam extends InteractiveTiledObject{
 
     public Dam(SimScreen screen, Rectangle bounds) {
         super(screen, bounds);
+
         fixture.setUserData(this);
         setCategoryFilter(PhysicsImp.DAM_BIT);
-        damDestroyedTexture = new Texture("damDestroyed.png");
-        damDestroyedTextureRegion = new TextureRegion();
+
+
     }
 
 
     public void onExplosionCollision() {
         Gdx.app.log("dam Destroyed", "");
         setCategoryFilter(PhysicsImp.DESTROYED_BIT);
-        getCell().setTile(null);
-        setRegion(damDestroyedTexture);
-
+//        getCell().setTile(null);
+        clearCells(getCells());
+        PhysicsImp.DAM_DESTROYED = true;
+        draw();
     }
+
+    public void draw(){
+        damDestroyedTexture = new Texture("damDestroyed.png");
+        damDestroyedTextureRegion = new TextureRegion(damDestroyedTexture, body.getPosition().x, body.getPosition().y, damDestroyedTexture.getWidth(), damDestroyedTexture.getWidth());
+        setRegion(damDestroyedTextureRegion);
+        setBounds(body.getPosition().x, body.getPosition().y, damDestroyedTexture.getWidth(), damDestroyedTexture.getWidth());
+    }
+
+
+
 }

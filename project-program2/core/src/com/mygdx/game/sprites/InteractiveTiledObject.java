@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.PhysicsImp;
 import com.mygdx.game.screens.SimScreen;
 
@@ -64,11 +65,30 @@ public abstract class InteractiveTiledObject extends Sprite {
 
     public TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
-//        System.out.println("width of dam is : " +  bounds.getWidth());
-//        System.out.println("height of dam is :" + bounds.getHeight());
-//        System.out.println("center of dam is :" + bounds.getCenter(new Vector2(bounds.getWidth(), bounds.height)));
+        System.out.println("width of dam is : " +  bounds.getWidth());
+        System.out.println("height of dam is :" + bounds.getHeight());
+        System.out.println("center of dam is :" + bounds.getCenter(new Vector2(bounds.getWidth(), bounds.height)));
 //        System.out.println(body.getPosition().x + " " + body.getPosition().y);
         return layer.getCell((int)(body.getPosition().x * PhysicsImp.UNITSCALE/tileSize), (int)(body.getPosition().y * PhysicsImp.UNITSCALE/tileSize));
-
     }
+
+    public Array<TiledMapTileLayer.Cell> getCells(){
+        TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
+        Array<TiledMapTileLayer.Cell> cells = new Array<TiledMapTileLayer.Cell>();
+        for ( int j = -3 ; j<= -1; j++){
+            for (int i = -6 ; i <= 6; i++){
+                cells.add(layer.getCell((int)(body.getPosition().x * PhysicsImp.UNITSCALE/tileSize + i), (int)(body.getPosition().y * PhysicsImp.UNITSCALE/tileSize + j)));
+            }
+        }
+        return cells;
+    }
+
+    public void clearCells(Array<TiledMapTileLayer.Cell> cells){
+        for (int i = 0; i < cells.size; i++){
+            TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);
+            TiledMapTileLayer.Cell cell= cells.get(i);
+            cell.setTile(null);
+        }
+    }
+
 }

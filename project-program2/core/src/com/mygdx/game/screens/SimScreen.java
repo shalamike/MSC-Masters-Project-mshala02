@@ -32,6 +32,7 @@ import com.mygdx.game.PhysicsImp;
 import com.mygdx.game.scenes.Hud;
 import com.mygdx.game.scenes.MenuUI;
 import com.mygdx.game.sprites.Bomb;
+import com.mygdx.game.sprites.Dam;
 import com.mygdx.game.sprites.Plane;
 import com.mygdx.game.tools.B2WorldCreator;
 import com.mygdx.game.tools.WorldContactListener;
@@ -63,6 +64,7 @@ public class SimScreen implements Screen {
     //Dynamic bodies/ the bomb and plane
     private Bomb bomb;
     private Plane plane;
+    private Dam dam;
 
     //textureAtlas for animations
     private TextureAtlas atlas;
@@ -210,6 +212,10 @@ public class SimScreen implements Screen {
         sim.batch.begin();
         bomb.draw(sim.batch);
         plane.draw(sim.batch);
+        if (PhysicsImp.DAM_DESTROYED = true){
+
+        }
+
         sim.batch.end();
 
 
