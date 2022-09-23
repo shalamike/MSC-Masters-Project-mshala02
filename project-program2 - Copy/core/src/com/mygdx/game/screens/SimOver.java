@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.PhysicsImp;
+import com.mygdx.game.sprites.Dam;
 
 public class SimOver implements Screen {
     private Viewport viewport;
@@ -35,12 +36,13 @@ public class SimOver implements Screen {
 
         Label simOverLabel = new Label("SIMULATION OVER", font);
         Label backToMenuLabel = new Label("Click to Start Again", font);
-        if (!properties.isDamDestroyed()){
+        if (!Dam.explosionHitsDam){
             successOrFailedLable = new Label("Failed To Destroy Dam", font);
         } else{
 
             successOrFailedLable = new Label("Dam was Successfully Destroyed", font);
         }
+
 
         table.add(simOverLabel).expandX();
         table.row();
@@ -49,6 +51,7 @@ public class SimOver implements Screen {
         table.add(backToMenuLabel).expandX().padTop(10f);
 
         stage.addActor(table);
+        Dam.explosionHitsDam = false;
     }
 
     @Override

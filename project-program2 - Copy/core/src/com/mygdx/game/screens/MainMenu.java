@@ -39,9 +39,9 @@ public class MainMenu implements Screen {
         // setting default values for the sim properties these can be changed
         properties.setBombRPM(500);
         properties.setRadius(12);
-        properties.setPlaneSpeed(80);
+        properties.setPlaneSpeed(0);
         properties.setCriticalAngle(16);
-        properties.setStartDistance(12000);
+        properties.setStartDistance(168660);
         properties.setUnitScale(20);
         properties.setPlaneFLyAway(false);
         properties.setBombSinks(false);

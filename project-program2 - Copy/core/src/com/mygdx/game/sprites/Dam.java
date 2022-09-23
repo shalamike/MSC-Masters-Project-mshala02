@@ -12,6 +12,7 @@ import com.mygdx.game.screens.SimScreen;
 public class Dam extends InteractiveTiledObject{
 
 private PhysicsImp properties;
+    public static boolean explosionHitsDam = false, bombDamaged = false;
     public Dam(SimScreen screen, Rectangle bounds, PhysicsImp properties) {
         super(screen, bounds, properties);
 
@@ -24,11 +25,11 @@ private PhysicsImp properties;
         setCategoryFilter(PhysicsImp.DESTROYED_BIT);
 //        getCell().setTile(null);
         clearCells(getCells());
-        properties.setDamDestroyed(true);
+        explosionHitsDam = true;
     }
 
     public void bombDamaged(){
-        properties.setBombDamaged(true);
+        bombDamaged = false;
     }
 
 

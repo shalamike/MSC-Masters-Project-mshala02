@@ -158,6 +158,9 @@ public class SimScreen implements Screen {
         if (bomb.b2dbody.getPosition().x > 8500  || bomb.b2dbody.getPosition().y < 0){
             MenuUI.startPressed = false;
             PhysicsImp.WATER_BIT = 4;
+            if(Dam.explosionHitsDam){
+                properties.setDamDestroyed(true);
+            }
             sim.setScreen(new SimOver(sim, properties));
             dispose();
         }
