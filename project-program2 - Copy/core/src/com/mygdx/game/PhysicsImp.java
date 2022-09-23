@@ -17,7 +17,7 @@ public class PhysicsImp {
     private int radius; // setting the radius to a public static int as this will allow for it to be changed in the main menu
     private int bombRPM;
     private int planeSpeed ;
-    private int criticalAngle;
+    private float criticalAngle;
 
     //sim properties
     private int startDistance = 12000;
@@ -104,11 +104,11 @@ public class PhysicsImp {
         this.planeSpeed = planeSpeed;
     }
 
-    public int getCriticalAngle() {
+    public float getCriticalAngle() {
         return criticalAngle;
     }
 
-    public void setCriticalAngle(int criticalAngle) {
+    public void setCriticalAngle(float criticalAngle) {
         this.criticalAngle = criticalAngle;
     }
 

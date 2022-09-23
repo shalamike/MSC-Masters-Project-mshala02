@@ -34,6 +34,7 @@ import com.mygdx.game.scenes.MenuUI;
 import com.mygdx.game.sprites.Bomb;
 import com.mygdx.game.sprites.Dam;
 import com.mygdx.game.sprites.Plane;
+import com.mygdx.game.sprites.Water;
 import com.mygdx.game.tools.B2WorldCreator;
 import com.mygdx.game.tools.WorldContactListener;
 
@@ -116,6 +117,8 @@ public class SimScreen implements Screen {
     }
 
     public void handleInput(float dt){
+//        properties.setCriticalAngle(PhysicsImp.CRITICAL_ANGLE(world.getGravity().y));
+//        properties.setCriticalAngle(18);
         if (Hud.isStartPressed){
             bomb.b2dbody.setLinearVelocity(properties.getPlaneSpeed(),0);
             plane.b2dbody.setLinearVelocity(properties.getPlaneSpeed(),0);
@@ -135,15 +138,15 @@ public class SimScreen implements Screen {
             plane.b2dbody.applyLinearImpulse(new Vector2(0,1), plane.b2dbody.getWorldCenter(), true);
         }
 
-        if (properties.isBombHitsWater()){
-            if (!PhysicsImp.WillItBounce(PhysicsImp.ANGLE_OF_INCIDENCE(bomb.b2dbody.getLinearVelocity().x, bomb.b2dbody.getLinearVelocity().y), PhysicsImp.CRITICAL_ANGLE(world.getGravity().y))){
+        if (Water.bombHitsWater){
+            if (!PhysicsImp.WillItBounce(PhysicsImp.ANGLE_OF_INCIDENCE(bomb.b2dbody.getLinearVelocity().x, bomb.b2dbody.getLinearVelocity().y), properties.getCriticalAngle())){
 //                bomb.b2dbody.setLinearVelocity(new Vector2(bomb.b2dbody.getLinearVelocity().x * 0.9f , Math.abs(bomb.b2dbody.getLinearVelocity().y * 0.9f) ));
                 bomb.b2dbody.setLinearVelocity(0,0);
                 world.setGravity(new Vector2(0,-6));
                 PhysicsImp.WATER_BIT = 16;
 
             }
-            properties.setBombHitsWater(false);
+            Water.bombHitsWater = false;
         }
 
         if(bomb.b2dbody.getPosition().y <= 7 ){
@@ -183,7 +186,7 @@ public class SimScreen implements Screen {
         hud.stage.act();
 
 //        System.out.println("is dam destroyed " + PhysicsImp.DAM_DESTROYED);
-        System.out.println("current height of the bomb is: " + bomb.b2dbody.getPosition().y);
+//        System.out.println("current height of the bomb is: " + bomb.b2dbody.getPosition().y);
 //        System.out.println("mass of bomb: " +  PhysicsImp.MASS_OF_BOMB( PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY,PhysicsImp.BOMB_LENGTH));
 //        System.out.println("total vortex strength :" + PhysicsImp.VORTEX(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM));
 //        System.out.println("total downward acceleration of the bomb: " + PhysicsImp.TOTAL_ACCELERATION( PhysicsImp.TOTAL_DOWNWARD_FORCE(PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x), PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)), PhysicsImp.MASS_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)));

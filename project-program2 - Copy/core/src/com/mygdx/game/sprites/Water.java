@@ -12,6 +12,7 @@ import com.mygdx.game.PhysicsImp;
 import com.mygdx.game.screens.SimScreen;
 
 public class Water extends InteractiveTiledObject{
+    public static boolean bombHitsWater = false;
     private PhysicsImp properties;
     public Water(SimScreen screen, Rectangle bounds, PhysicsImp properties) {
         super(screen, bounds, properties);
@@ -26,7 +27,7 @@ public class Water extends InteractiveTiledObject{
     public void onWaterCollision(){
 //        fixture.setRestitution(0);
         Gdx.app.log("hit water", "");
-        properties.setBombHitsWater(true);
+        bombHitsWater = true;
         setCategoryFilter(PhysicsImp.WATER_BIT);
     }
 

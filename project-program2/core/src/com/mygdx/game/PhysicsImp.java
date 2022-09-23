@@ -19,7 +19,7 @@ public class PhysicsImp {
     public static int CRITICAL_ANGLE = 16;
 
     //sim properties
-    public static int START_DISTANCE = 12000;
+    public static int START_DISTANCE = 120000;
     public static float UNITSCALE = 20; // this will scale up all our vector quantities to increase simulation speeds to something more realistic
     public static boolean PLANE_FLY_AWAY = false, BOMB_SINKS = false, DAM_DESTROYED = false, BOMB_HITS_WATER = false, BOMB_DAMAGED = false;
 
