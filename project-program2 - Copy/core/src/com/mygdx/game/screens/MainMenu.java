@@ -25,16 +25,29 @@ public class MainMenu implements Screen {
     private MenuUI menuUI;
     private Game sim;
 
-
+    private PhysicsImp properties;
 
     public MainMenu(MyGdxGame menu, Game sim) {
         this.menu = menu;
         this.sim = sim;
+        properties = new PhysicsImp();
         viewport = new FitViewport(PhysicsImp.S_WIDTH, PhysicsImp.S_HEIGHT);
         this.stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-        menuUI = new MenuUI(menu);
+        menuUI = new MenuUI(menu, properties);
 
+        // setting default values for the sim properties these can be changed
+        properties.setBombRPM(500);
+        properties.setRadius(12);
+        properties.setPlaneSpeed(80);
+        properties.setCriticalAngle(16);
+        properties.setStartDistance(12000);
+        properties.setUnitScale(20);
+        properties.setPlaneFLyAway(false);
+        properties.setBombSinks(false);
+        properties.setDamDestroyed(false);
+        properties.setBombHitsWater(false);
+        properties.setBombDamaged(false);
     }
 
 
@@ -49,7 +62,6 @@ public class MainMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         menuUI.draw();
         update(delta);
-        //stage.act();
 
     }
 
@@ -65,13 +77,13 @@ public class MainMenu implements Screen {
             if (MenuUI.rpmOutput.matches(numRegexChecker)){
                 int num =Integer.parseInt(MenuUI.rpmOutput);
                 if (num >= 0 && num <= 2000){
-                    PhysicsImp.BOMB_RPM = num;
+                    properties.setBombRPM(num);
                 }
-                else if ( num > 2000){
-                    PhysicsImp.BOMB_RPM = 2000;
+                else if ( num >= 2000){
+                    properties.setBombRPM(2000);
                 }
                 else {
-                    PhysicsImp.BOMB_RPM = 0;
+                    properties.setBombRPM(0);
                 }
             }
             MenuUI.rpmPressed = false;
@@ -81,7 +93,7 @@ public class MainMenu implements Screen {
             String numRegexChecker = "[0-9]+";
             if (MenuUI.simSpeedOutput.matches(numRegexChecker)){
                 float num =Integer.parseInt(MenuUI.simSpeedOutput);
-                PhysicsImp.UNITSCALE = num * 10;
+               properties.setUnitScale(num*10);
             }
             MenuUI.simSpeedPressed = false;
         }
@@ -90,7 +102,7 @@ public class MainMenu implements Screen {
         if (MenuUI.planeSpeedPressed == true){
             String numRegexChecker = "[0-9]+";
             if (MenuUI.planeSpeedOutput.matches(numRegexChecker)){
-                PhysicsImp.PLANE_SPEED = Integer.parseInt(MenuUI.distanceOutput);
+               properties.setPlaneSpeed(Integer.parseInt(MenuUI.distanceOutput));
             }
             MenuUI.planeSpeedPressed = false;
         }
@@ -100,13 +112,13 @@ public class MainMenu implements Screen {
             if (MenuUI.distanceOutput.matches(numRegexChecker)){
                 int num =Integer.parseInt(MenuUI.distanceOutput);
                 if (num >= 100 && num <= 168660){
-                    PhysicsImp.START_DISTANCE = num;
+                    properties.setStartDistance(num);
                 }
-                else if ( num > 168660){
-                    PhysicsImp.START_DISTANCE = 168660;
+                else if ( num >= 168660){
+                    properties.setStartDistance(168660);
                 }
                 else if (num < 100){
-                    PhysicsImp.START_DISTANCE = 100;
+                    properties.setStartDistance(100);
                 }
             }
             MenuUI.distancePressed = false;
@@ -116,7 +128,7 @@ public class MainMenu implements Screen {
         if (MenuUI.startPressed== true){
             menu.dispose();
             System.out.println("start sim");
-            sim.setScreen(new SimScreen(menu));
+            sim.setScreen(new SimScreen(menu, properties));
         }
 
     }

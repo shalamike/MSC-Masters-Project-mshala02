@@ -69,15 +69,16 @@ public class SimScreen implements Screen {
     //textureAtlas for animations
     private TextureAtlas atlas;
 
+    PhysicsImp properties;
 
-
-    public SimScreen(MyGdxGame sim){
+    public SimScreen(MyGdxGame sim, PhysicsImp properties){
+        this.properties = properties;
         this.sim = sim;
         simCam = new OrthographicCamera();
-        simPort = new FitViewport(PhysicsImp.S_WIDTH / PhysicsImp.UNITSCALE, PhysicsImp.S_HEIGHT / PhysicsImp.UNITSCALE, simCam);
+        simPort = new FitViewport(PhysicsImp.S_WIDTH / properties.getUnitScale(), PhysicsImp.S_HEIGHT / properties.getUnitScale(), simCam);
         simPort.apply();
         // creating the hud for the simulation
-        hud = new Hud(sim.batch);
+        hud = new Hud(sim.batch, properties);
 
         //getting the texture atlas for our sprite sheet
         atlas = new TextureAtlas("sprites/sprite_sheet.txt");
@@ -85,7 +86,7 @@ public class SimScreen implements Screen {
         // initialising tiled variables
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("projectmap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / PhysicsImp.UNITSCALE);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / properties.getUnitScale());
         simCam.position.set(simPort.getWorldWidth()/2, simPort.getWorldHeight()/2, 0 );
         // initiallising box2d variables
         world = new World(new Vector2(0,0), true);
@@ -99,10 +100,10 @@ public class SimScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         //initialising the bomb
-        bomb = new Bomb(this);
-        plane = new Plane( this);
+        bomb = new Bomb(this, properties);
+        plane = new Plane( this, properties);
 
-        new B2WorldCreator(this);
+        new B2WorldCreator(this, properties);
 
         //identifying collisions
         world.setContactListener(new WorldContactListener());
@@ -116,36 +117,36 @@ public class SimScreen implements Screen {
 
     public void handleInput(float dt){
         if (Hud.isStartPressed){
-            bomb.b2dbody.setLinearVelocity(PhysicsImp.PLANE_SPEED,0);
-            plane.b2dbody.setLinearVelocity(PhysicsImp.PLANE_SPEED,0);
+            bomb.b2dbody.setLinearVelocity(properties.getPlaneSpeed(),0);
+            plane.b2dbody.setLinearVelocity(properties.getPlaneSpeed(),0);
 
             if (Hud.isDropBombPressed){
-                world.setGravity(new Vector2(0,-PhysicsImp.TOTAL_ACCELERATION( PhysicsImp.TOTAL_DOWNWARD_FORCE(PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x), PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)), PhysicsImp.MASS_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)) ));
+                world.setGravity(new Vector2(0,-PhysicsImp.TOTAL_ACCELERATION( PhysicsImp.TOTAL_DOWNWARD_FORCE(PhysicsImp.LIFT_FORCE(properties.getRadius(), properties.getBombRPM(), bomb.b2dbody.getLinearVelocity().x), PhysicsImp.WEIGHT_OF_BOMB(properties.getRadius(), PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)), PhysicsImp.MASS_OF_BOMB(properties.getRadius(), PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)) ));
                 System.out.println("bombs away");
                 Hud.isDropBombPressed = false;
                 Hud.isStartPressed = false;
-                PhysicsImp.PLANE_FLY_AWAY = true;
+                properties.setPlaneFLyAway(true);
 
 
             }
         }
-        if (PhysicsImp.PLANE_FLY_AWAY){
-            plane.b2dbody.applyForceToCenter(new Vector2(0,PhysicsImp.TOTAL_ACCELERATION( PhysicsImp.TOTAL_DOWNWARD_FORCE(PhysicsImp.LIFT_FORCE(PhysicsImp.RADIUS, PhysicsImp.BOMB_RPM, bomb.b2dbody.getLinearVelocity().x), PhysicsImp.WEIGHT_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)), PhysicsImp.MASS_OF_BOMB(PhysicsImp.RADIUS, PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH))), true);
+        if (properties.isPlaneFLyAway()){
+            plane.b2dbody.applyForceToCenter(new Vector2(0,PhysicsImp.TOTAL_ACCELERATION( PhysicsImp.TOTAL_DOWNWARD_FORCE(PhysicsImp.LIFT_FORCE(properties.getRadius(), properties.getBombRPM(), bomb.b2dbody.getLinearVelocity().x), PhysicsImp.WEIGHT_OF_BOMB(properties.getRadius(), PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH)), PhysicsImp.MASS_OF_BOMB(properties.getRadius(), PhysicsImp.BOMB_DENSITY, PhysicsImp.BOMB_LENGTH))), true);
             plane.b2dbody.applyLinearImpulse(new Vector2(0,1), plane.b2dbody.getWorldCenter(), true);
         }
 
-        if (PhysicsImp.BOMB_HITS_WATER){
-            if (!PhysicsImp.WillItBounce(PhysicsImp.ANGLE_OF_INCIDENCE(bomb.b2dbody.getLinearVelocity().x, bomb.b2dbody.getLinearVelocity().y))){
+        if (properties.isBombHitsWater()){
+            if (!PhysicsImp.WillItBounce(PhysicsImp.ANGLE_OF_INCIDENCE(bomb.b2dbody.getLinearVelocity().x, bomb.b2dbody.getLinearVelocity().y), PhysicsImp.CRITICAL_ANGLE(world.getGravity().y))){
 //                bomb.b2dbody.setLinearVelocity(new Vector2(bomb.b2dbody.getLinearVelocity().x * 0.9f , Math.abs(bomb.b2dbody.getLinearVelocity().y * 0.9f) ));
                 bomb.b2dbody.setLinearVelocity(0,0);
                 world.setGravity(new Vector2(0,-6));
                 PhysicsImp.WATER_BIT = 16;
 
             }
-            PhysicsImp.BOMB_HITS_WATER = false;
+            properties.setBombHitsWater(false);
         }
 
-        if(bomb.b2dbody.getPosition().y <= 7 && !PhysicsImp.BOMB_DAMAGED){
+        if(bomb.b2dbody.getPosition().y <= 7 ){
             world.setGravity(new Vector2(0,0));
             bomb.b2dbody.setLinearVelocity(0,0);
             bomb.explode();
@@ -154,9 +155,7 @@ public class SimScreen implements Screen {
         if (bomb.b2dbody.getPosition().x > 8500  || bomb.b2dbody.getPosition().y < 0){
             MenuUI.startPressed = false;
             PhysicsImp.WATER_BIT = 4;
-            PhysicsImp.PLANE_FLY_AWAY = false;
-            PhysicsImp.BOMB_SINKS = false;
-            sim.setScreen(new SimOver(sim));
+            sim.setScreen(new SimOver(sim, properties));
             dispose();
         }
 
@@ -165,9 +164,7 @@ public class SimScreen implements Screen {
         if (hud.isBackToMenuPressed){
             MenuUI.startPressed = false;
             PhysicsImp.WATER_BIT = 4;
-            PhysicsImp.PLANE_FLY_AWAY = false;
-            PhysicsImp.BOMB_SINKS = false;
-            sim.setScreen(new SimOver(sim));
+            sim.setScreen(new SimOver(sim, properties));
             dispose();
         }
     }
@@ -178,7 +175,7 @@ public class SimScreen implements Screen {
         plane.update(dt);
         world.step(1/60f, 6, 2);
         simCam.position.x = bomb.b2dbody.getPosition().x;
-        simCam.position.y = (PhysicsImp.S_HEIGHT / PhysicsImp.UNITSCALE)/2;
+        simCam.position.y = (PhysicsImp.S_HEIGHT / properties.getUnitScale())/2;
         simCam.update();
         renderer.setView(simCam);
         hud.calcDistance(bomb.b2dbody.getPosition().x);

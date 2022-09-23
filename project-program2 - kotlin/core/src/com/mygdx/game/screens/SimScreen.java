@@ -145,7 +145,7 @@ public class SimScreen implements Screen {
             PhysicsImp.BOMB_HITS_WATER = false;
         }
 
-        if(bomb.b2dbody.getPosition().y <= 7 && !PhysicsImp.BOMB_DAMAGED){
+        if(bomb.b2dbody.getPosition().y <= 7 && PhysicsImp.BOMB_DAMAGED == false){
             world.setGravity(new Vector2(0,0));
             bomb.b2dbody.setLinearVelocity(0,0);
             bomb.explode();

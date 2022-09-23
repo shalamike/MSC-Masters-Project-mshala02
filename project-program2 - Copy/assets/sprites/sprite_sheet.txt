@@ -1,0 +1,61 @@
+sprite_sheet.png
+size: 1756, 1272
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+circleRotation0
+  rotate: false
+  xy: 0, 0
+  size: 439, 424
+  orig: 439, 424
+  offset: 0, 0
+  index: 0
+circleRotation45
+  rotate: false
+  xy: 878, 0
+  size: 439, 424
+  orig: 439, 424
+  offset: 0, 0
+  index: 1
+circleRotation90
+  rotate: false
+  xy: 1317, 0
+  size: 439, 424
+  orig: 439, 424
+  offset: 0, 0
+  index: 2
+circleRotation135
+  rotate: false
+  xy: 439, 0
+  size: 439, 424
+  orig: 439, 424
+  offset: 0, 0
+  index: 3
+explosion
+  rotate: false
+  xy: 500, 424
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: 4
+plane_flying_away
+  rotate: false
+  xy: 1012, 424
+  size: 534, 467
+  orig: 534, 467
+  offset: 0, 0
+  index: 5
+plane_upright
+  rotate: false
+  xy: 0, 936
+  size: 744, 336
+  orig: 744, 336
+  offset: 0, 0
+  index: 6
+splash
+  rotate: false
+  xy: 0, 424
+  size: 500, 500
+  orig: 500, 500
+  offset: 0, 0
+  index: 7
